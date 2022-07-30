@@ -109,7 +109,7 @@ $(function () {
 		var arr_sheet = [];
 		$.ajax({
 			type: "POST",
-			url: "/common/get_eval_sheet_list.jsp",
+			url: "../common/get_eval_sheet_list.jsp",
 			data: "use_yn=1",
 			async: false,
 			dataType: "json",

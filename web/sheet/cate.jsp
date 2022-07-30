@@ -19,7 +19,7 @@
 		var tree = $("#tree").jstree({
 			"core" : {
 				"data" : {
-					"url": "/common/get_eval_cate_tree.jsp",
+					"url": "../common/get_eval_cate_tree.jsp",
 					"dataType": "json",
 				},
 				"themes" : {

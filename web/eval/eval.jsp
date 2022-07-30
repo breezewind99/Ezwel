@@ -114,7 +114,7 @@
 		//이벤트 상세정보 조회
 		$.ajax({
 			type: "POST",
-			url: "/common/get_eval_event_data.jsp",
+			url: "../common/get_eval_event_data.jsp",
 			data: "event_code="+$("#search input[name=event_code]").val(),
 			async: false,
 			dataType: "json",

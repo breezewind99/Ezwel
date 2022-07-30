@@ -15,7 +15,7 @@ $(function () {
 	var tree = $("#tree").jstree({
 		"core" : {
 			"data" : {
-				"url": "/common/get_eval_cate_tree.jsp",
+				"url": "../common/get_eval_cate_tree.jsp",
 				"data": "use_yn=1",
 				"dataType": "json",
 			},

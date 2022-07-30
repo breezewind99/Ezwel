@@ -51,7 +51,7 @@ $(function () {
 	tree = $("#tree").jstree({
 		"core" : {
 			"data" : {
-				"url": "/common/get_eval_cate_tree.jsp",
+				"url": "../common/get_eval_cate_tree.jsp",
 				"data": "cate_codes=<%=cate_codes%>&use_yn=1",
 				"dataType": "json",
 			},
