@@ -1,5 +1,6 @@
 package com.cnet.crec.util;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -56,6 +57,9 @@ public class SessionListener implements HttpSessionListener
 	 */	
 	public void setLoginSession(HttpServletRequest request, HttpSession session) 
 	{
+		if (request.getServletContext().getAttribute("activeUsers") == null) {
+			request.getServletContext().setAttribute("activeUsers",new HashMap());
+		}
 		Map activeUsers = (Map) request.getServletContext().getAttribute("activeUsers");				
 		
 		activeUsers.put(session.getId(), session);

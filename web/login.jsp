@@ -35,6 +35,7 @@
 		String id_save = CommonUtil.getParameter("id_save", "");
 		String login_ip = request.getRemoteAddr();
 
+		logger.debug("IP : " + login_ip);
 		//파라미터 체크
 		if(!CommonUtil.hasText(login_id) || !CommonUtil.hasText(login_pass)) 
 		{
@@ -98,7 +99,7 @@
 		Map<String, Object> data  = db.selectOne("login.selectLoginUser", argMap);
 		
 		int passCheckDay = 0;
-		
+
 		if(data == null) 
 		{
 			/*
@@ -122,6 +123,14 @@
 			argMap.put("user_ip", data.get("user_ip"));
 			argMap.put("upd_id", login_id);
 			argMap.put("upd_ip", login_ip);
+
+			logger.debug("IP : " + login_ip + ", Database IP : " + data.get("user_ip").toString());
+			if(!"".equals(data.get("user_ip").toString())) {
+				if (!login_ip.equals(data.get("user_ip").toString())) {
+					Site.writeJsonResult(out, false, "해당 아이디의 접근 IP가 등록된 IP와 달라 로그인 하실수 없습니다.");
+					return;
+				}
+			}
 
 			/*
 				7. 아이디 잠금 여부 체크(금일 이전에 잠금 처리 되었을 경우)

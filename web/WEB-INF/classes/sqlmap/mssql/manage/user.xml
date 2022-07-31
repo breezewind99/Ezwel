@@ -368,19 +368,23 @@
 		insert into tbl_user 
 		(
 			user_id,user_pass,user_name
+			,bpart_code,mpart_code,spart_code
+			,channel_no, local_no
 			,business_code,user_level
 			,pass_chg_term
 			,pass_expire_date
 			,pass_upd_date
-			,lock_yn,resign_yn,use_yn
+			,lock_yn,resign_yn,use_yn,eval_yn
 			,regi_datm,regi_ip,regi_id
 		)
 		select #{user_id},#{user_pass},#{user_name}
+			,'','',''
+			,'',''
 			,#{business_code},#{user_level}
 			,#{pass_chg_term}
 			,case #{pass_chg_term} when '0' then '9999-12-31' else convert(varchar(10),dateadd(day,${pass_chg_term},getdate()),121) end
 			,convert(varchar(10),getdate(),121)
-			,'0','0','1'
+			,'0','0','1','y'
 			,getdate(),#{regi_ip},#{regi_id}
 	</insert>	
 
