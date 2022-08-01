@@ -53,6 +53,10 @@
 		String htm_bpart_list = "";
 		String htm_mpart_list = "";
 		String htm_spart_list = "";
+		String htm_work_bpart_list = "";
+		String htm_work_mpart_list = "";
+		String htm_work_spart_list = "";
+
 	
 		List<Map<String, Object>> system_list = null;
 		List<Map<String, Object>> bpart_list = null;
@@ -68,6 +72,12 @@
 				htm_bpart_list = Site.getMyPartCodeComboHtml(session, 1);
 				htm_mpart_list = Site.getMyPartCodeComboHtml(session, 2);
 				htm_spart_list = Site.getMyPartCodeComboHtml(session, 3);
+			}
+			else if(item.get("conf_value").equals("work_code"))
+			{
+				htm_work_bpart_list = Site.getMyPartCodeComboHtml(session, 1);
+				htm_work_mpart_list = Site.getMyPartCodeComboHtml(session, 2);
+				htm_work_spart_list = Site.getMyPartCodeComboHtml(session, 3);
 			}
 		}
 %>
@@ -722,17 +732,32 @@
 					sb.append(" <option value='4'>자동안내</option>\n");
 					sb.append(" <option value='5'>다량안내</option>\n");
 					sb.append("</select>");
-				} 
-				else if ("custom_fld_05".equals(conf_value)) 
+				}
+
+				 */
+				else if("work_code".equals(conf_value))
+				{
+					// 조직도
+					sb.append("<select class='form-control rec_form"+etc_num+"' name='work_bpart_code'>\n");
+					sb.append(htm_work_bpart_list);
+					sb.append("</select> : \n");
+					sb.append("<select class='form-control rec_form"+etc_num+"' name='work_mpart_code'>\n");
+					sb.append(htm_work_mpart_list);
+					sb.append("</select> : \n");
+					sb.append("<select class='form-control rec_form"+etc_num+"' name='work_spart_code'>\n");
+					sb.append(htm_work_spart_list);
+					sb.append("</select>\n");
+				}
+				else if ("custom_fld_12".equals(conf_value))
 				{
 					// 호종료주체
 					sb.append("<select class='form-control rec_form"+etc_num+"' name='"+conf_field+"'>\n");
 					sb.append("	<option value=''>전체</option>\n");
-					sb.append("	<option value='0'>시스템</option>\n");
-					sb.append("	<option value='1'>상담사</option>\n");
+					sb.append("	<option value='1'>베스트</option>\n");
+					sb.append("	<option value='2'>워스트</option>\n");
 					sb.append("</select>");
 				}				
-				*/ 
+
 				else 
 				{
 					sb.append("<input type='text' class='form-control rec_form"+text_num+"' name='"+conf_field+"' placeholder=''>\n");
