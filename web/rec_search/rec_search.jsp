@@ -53,9 +53,8 @@
 		String htm_bpart_list = "";
 		String htm_mpart_list = "";
 		String htm_spart_list = "";
+
 		String htm_work_bpart_list = "";
-		String htm_work_mpart_list = "";
-		String htm_work_spart_list = "";
 
 	
 		List<Map<String, Object>> system_list = null;
@@ -75,9 +74,7 @@
 			}
 			else if(item.get("conf_value").equals("work_code"))
 			{
-				htm_work_bpart_list = Site.getMyPartCodeComboHtml(session, 1);
-				htm_work_mpart_list = Site.getMyPartCodeComboHtml(session, 2);
-				htm_work_spart_list = Site.getMyPartCodeComboHtml(session, 3);
+				htm_work_bpart_list = Site.getWorkCodeComboHtml(session, 1);
 			}
 		}
 %>
@@ -131,7 +128,8 @@
 		baseObj.toolbar.items.push(
 			{type:"button", icon:"ui-icon-gear", label:"설정", style:"float:right; margin-right:5px;", attr:"data-toggle='modal'",  listeners:[{"click":function() {popResultConfig('R');}}]} ,
 			{type:"button", icon:"ui-icon-gear", label:"다중다운로드", style:"float:right; margin-right:5px;display:<%=ComLib.getCssDisplayStr(Finals.isExistMultiDownload)%>", attr:"data-toggle='modal'",  listeners:[{"click":function() {getSelectedRows();}}]} ,
-			{type:"button", icon:"ui-icon-gear", label:"다중청취", style:"float:right; margin-right:5px;", attr:"data-toggle='modal'",  listeners:[{	"click":function() {playRecFileMulti('rec');}}]}
+			{type:"button", icon:"ui-icon-gear", label:"다중청취", style:"float:right; margin-right:5px;", attr:"data-toggle='modal'",  listeners:[{	"click":function() {playRecFileMulti('rec');}}]},
+			{type:"button", icon:"ui-icon-gear", label:"BEST/WORST", style:"float:right; margin-right:5px;", attr:"data-toggle='modal'",  listeners:[{"click":function() {playBestWorst('rec');}}]}
 		);
 	
 		var obj = $.extend({}, baseObj, {
@@ -737,26 +735,22 @@
 				 */
 				else if("work_code".equals(conf_value))
 				{
-					// 조직도
+					// 업무코드
 					sb.append("<select class='form-control rec_form"+etc_num+"' name='work_bpart_code'>\n");
 					sb.append(htm_work_bpart_list);
-					sb.append("</select> : \n");
-					sb.append("<select class='form-control rec_form"+etc_num+"' name='work_mpart_code'>\n");
-					sb.append(htm_work_mpart_list);
-					sb.append("</select> : \n");
-					sb.append("<select class='form-control rec_form"+etc_num+"' name='work_spart_code'>\n");
-					sb.append(htm_work_spart_list);
 					sb.append("</select>\n");
+					sb.append("<select class='form-control rec_form"+etc_num+"' name='work_mpart_code'><option value=''>중분류</option><option value='1'>중분류</option></select>\n");
+					sb.append("<select class='form-control rec_form"+etc_num+"' name='work_spart_code'><option value=''>소분류</option></select>\n");
 				}
-				else if ("custom_fld_12".equals(conf_value))
+				else if ("rec_rate".equals(conf_value))
 				{
-					// 호종료주체
+					// 베스트 워스트 세팅
 					sb.append("<select class='form-control rec_form"+etc_num+"' name='"+conf_field+"'>\n");
 					sb.append("	<option value=''>전체</option>\n");
 					sb.append("	<option value='1'>베스트</option>\n");
 					sb.append("	<option value='2'>워스트</option>\n");
 					sb.append("</select>");
-				}				
+				}
 
 				else 
 				{

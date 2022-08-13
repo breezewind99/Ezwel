@@ -232,7 +232,52 @@ public class Site
 		argMap.put("part_depth", part_depth);
 		argMap.put("use_yn", "1");
 		argMap.put("firstStr", ((part_depth == 1) ? bPart : (part_depth==2) ? mPart : sPart));
-		return getPartCodeComboHtml(argMap);
+		return getPartCodeComboHtml(argMap,"user_group.selectPartCode");
+	}
+
+	/**
+	 * 내 조직도 콤보박스 (맨처음 호출됨)
+	 * @param sess
+	 * @param part_depth
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getWorkCodeComboHtml(HttpSession sess, int part_depth) throws Exception
+	{
+		//현재 선택 언어 - CJM(20190207)
+		String nowLanguage = CommonUtil.getCookieValue("ck_template_lang");
+		/*
+		System.out.println("☆☆☆");
+		System.out.println("getMyPartCodeComboHtml nowLanguage : "+nowLanguage);
+		System.out.println("☆☆☆");
+		*/
+		String bPart = "대분류";
+		String mPart = "중분류";
+		String sPart = "소분류";
+
+		if("en_us".equals(nowLanguage))
+		{
+			bPart = "Big part";
+			mPart = "Middle part";
+			sPart = "Small part";
+		}
+		else
+		{
+			bPart = "대분류";
+			mPart = "중분류";
+			sPart = "소분류";
+		}
+
+		Map<String, Object> argMap = new HashMap<String, Object>();
+		argMap.put("_user_level", sess.getAttribute("login_level"));
+		argMap.put("business_code", sess.getAttribute("login_business_code"));
+		argMap.put("bpart_code", sess.getAttribute("login_bpart"));
+		argMap.put("mpart_code", sess.getAttribute("login_mpart"));
+		argMap.put("spart_code", sess.getAttribute("login_spart"));
+		argMap.put("part_depth", part_depth);
+		argMap.put("use_yn", "1");
+		argMap.put("firstStr", ((part_depth == 1) ? bPart : (part_depth==2) ? mPart : sPart));
+		return getPartCodeComboHtml(argMap,"work_group.selectPartCode");
 	}
 	
 	/**
@@ -241,14 +286,14 @@ public class Site
 	 * @return
 	 * @throws Exception
 	 */
-	public static String getPartCodeComboHtml(Map<String, Object> m) throws Exception
+	public static String getPartCodeComboHtml(Map<String, Object> m, String queryId) throws Exception
 	{
 		Db db = null;
 		String htmResult = "";
 		try 
 		{
 			db = new Db(true);
-			List<Map<String, Object>> list = db.selectList("user_group.selectPartCode", m);
+			List<Map<String, Object>> list = db.selectList(queryId, m);
 
 			if(list != null) 
 			{

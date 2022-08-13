@@ -48,4 +48,13 @@
 		</set>
 		where rec_datm=#{rec_datm} and local_no=#{local_no} and rec_filename=#{rec_filename}
 	</update>
+
+	<!-- 평가결과 업데이트 RECORD - updateEvalEventResultListRecord -->
+	<update id="updateBestWorst" parameterType="map">
+		/* BestWorst 업데이트 RECORD - updateBestWorst */
+		update tbl_record
+		set rec_rate = #{eval_rate_code}
+		where rec_date = #{rec_date}
+		  and rec_filename = #{rec_filename}
+	</update>
 </mapper>

@@ -24,7 +24,7 @@
 		if(!"0".equals(perm_check))		if(!Site.isPmss(out,"","json")) return;
 		
 		// 파라미터 체크
-		if(!CommonUtil.hasText(business_code) || !CommonUtil.hasText(part_depth)) 
+		if(!CommonUtil.hasText(business_code) || !CommonUtil.hasText(work_part_depth))
 		{
 			Site.writeJsonResult(out, false, CommonUtil.getErrorMsg("NO_PARAM"));
 			return;
@@ -39,7 +39,7 @@
 		argMap.put("work_part_depth",work_part_depth);
 		argMap.put("use_yn","1");
 
-		List<Map<String,Object>> list = db.selectList("user_group.selectList", argMap);
+		List<Map<String,Object>> list = db.selectList("work_group.selectList", argMap);
 
 		json.put("data", list);
 		out.print(json.toJSONString());

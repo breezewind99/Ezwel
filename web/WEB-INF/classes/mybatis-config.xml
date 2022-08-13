@@ -110,6 +110,7 @@
 		<mapper resource="sqlmap/mssql/manage/menu.xml"/>
 		<mapper resource="sqlmap/mssql/manage/user.xml"/>
 		<mapper resource="sqlmap/mssql/manage/user_group.xml"/>
+		<mapper resource="sqlmap/mssql/manage/work_group.xml"/>
 		<mapper resource="sqlmap/mssql/manage/system.xml"/>
 		<mapper resource="sqlmap/mssql/manage/channel.xml"/>
 		<mapper resource="sqlmap/mssql/manage/search_config.xml"/>

@@ -44,6 +44,18 @@
 		String custom_fld_03 = CommonUtil.getParameter("custom_fld_03");
 		String custom_fld_04 = CommonUtil.getParameter("custom_fld_04");
 		String custom_fld_05 = CommonUtil.getParameter("custom_fld_05");
+		String custom_fld_06 = CommonUtil.getParameter("custom_fld_06");
+		String custom_fld_07 = CommonUtil.getParameter("custom_fld_07");
+		String custom_fld_08 = CommonUtil.getParameter("custom_fld_08");
+		String custom_fld_09 = CommonUtil.getParameter("custom_fld_09");
+		String custom_fld_10 = CommonUtil.getParameter("custom_fld_10");
+		String custom_fld_11 = CommonUtil.getParameter("custom_fld_11");
+		String custom_fld_12 = CommonUtil.getParameter("custom_fld_12");
+		String rec_rate = CommonUtil.getParameter("rec_rate");
+
+		String work_bpart_code = CommonUtil.getParameter("work_bpart_code");
+		String work_mpart_code = CommonUtil.getParameter("work_mpart_code");
+		String work_spart_code = CommonUtil.getParameter("work_spart_code");
 		
 		// tree에서 선택된 user id list
 		String user_list = CommonUtil.getParameter("user_list");
@@ -158,8 +170,16 @@
 		argMap.put("custom_fld_01", custom_fld_01);
 		argMap.put("custom_fld_02", custom_fld_02);
 		argMap.put("custom_fld_03", custom_fld_03);
-		argMap.put("custom_fld_04", custom_fld_04);
-		argMap.put("custom_fld_05", custom_fld_05);
+		argMap.put("custom_fld_04", work_bpart_code);
+		argMap.put("custom_fld_05", work_mpart_code);
+		argMap.put("custom_fld_06", work_spart_code);
+		argMap.put("custom_fld_07", custom_fld_07);
+		argMap.put("custom_fld_08", custom_fld_08);
+		argMap.put("custom_fld_09", custom_fld_09);
+		argMap.put("custom_fld_10", custom_fld_10);
+		argMap.put("custom_fld_11", custom_fld_11);
+		argMap.put("custom_fld_12", custom_fld_12);
+		argMap.put("rec_rate", rec_rate);
 
 		// 사용자 권한에 따른 녹취이력 조회
 		argMap.put("_user_id" ,_LOGIN_ID);

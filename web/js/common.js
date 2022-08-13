@@ -170,6 +170,7 @@ $(function()
 
 	// 검색 영역에서 조직도 조회
 	$("#search select[name=bpart_code], #search select[name=mpart_code]").change(function(){chgPartCode($(this));});
+	$("#search select[name=work_bpart_code], #search select[name=work_mpart_code]").change(function(){chgWorkCode($(this));});
 	
 	// 조회 버튼 클릭 시 데이터 조회
 	$("#search button[name=btn_search]").click(function() {
@@ -498,7 +499,9 @@ var chgPartCode = function(obj) {
 	var mpart_code		= toNN((part_depth == 3) ? form_obj.find("select[name=mpart_code]").val() : "");
 
 	form_obj.find("select[name=" + target_field	+ "]").html("<option value=''>"	+ target_name +	"</option>");
-	
+
+	console.log('Field Value [it_business_code] : ' + it_business_code);
+	console.log('Field Value [it_business_code] : ' + part_depth);
 	//대분류 바꾸는 경우 소분류도 초기화 한다.
 	if(part_depth == 2)
 	{
@@ -512,7 +515,7 @@ var chgPartCode = function(obj) {
 	if(obj.val() == "") return;
 	
 	var fvData = "bpart_code="+bpart_code+"&mpart_code="+mpart_code+"&part_depth="+part_depth+"&perm_check="+perm_check;
-	if(!gf_isNull(it_business_code))	fvData = "bpart_code="+bpart_code+"&mpart_code="+mpart_code+"&part_depth="+part_depth+"&perm_check="+perm_check+"&business_code="+it_business_code;	
+	if(!gf_isNull(it_business_code))	fvData = "bpart_code="+bpart_code+"&mpart_code="+mpart_code+"&part_depth="+part_depth+"&perm_check="+perm_check+"&business_code="+it_business_code;
 
 	$.ajax({
 		type: "POST",
@@ -543,6 +546,81 @@ var chgPartCode = function(obj) {
 				}
 			} 
 			else 
+			{
+				alert(dataJSON.msg);
+				return false;
+			}
+		},
+		error:function(req,status,err){
+			alert("에러가 발생하였습니다. [" + req.responseText + "]");
+			return false;
+		}
+	});
+};
+
+
+/**
+ * 조직도 대분류/중분류/소분류 조회
+ */
+var chgWorkCode = function(obj) {
+	var form_obj = obj.parents("form");
+	var field_name = obj.attr("name");
+	var perm_check = (form_obj.find("input[name=perm_check]")) ? form_obj.find("input[name=perm_check]").val() : "";
+	var it_business_code = (form_obj.find("input[name=it_business_code]")) ? form_obj.find("input[name=it_business_code]").val() : "";
+
+	var part_depth		= (field_name == "work_bpart_code") ? 2 : (field_name == "work_mpart_code") ? 3 : 3;
+	var target_field	= (part_depth == 2) ? "work_mpart_code" : (part_depth == 1) ? "work_bpart_code" : "work_spart_code";
+	var target_name		= (part_depth == 2) ? "중분류" : (part_depth == 1) ? "대분류" : "소분류";
+
+	var bpart_code		= toNN((part_depth != 1) ? form_obj.find("select[name=work_bpart_code]").val() : "");
+	var mpart_code		= toNN((part_depth == 3) ? form_obj.find("select[name=work_mpart_code]").val() : "");
+
+	form_obj.find("select[name=" + target_field	+ "]").html("<option value=''>"	+ target_name +	"</option>");
+
+	console.log('Field Value [it_business_code] : ' + it_business_code);
+	console.log('Field Value [it_business_code] : ' + part_depth);
+	//대분류 바꾸는 경우 소분류도 초기화 한다.
+	if(part_depth == 2)
+	{
+		form_obj.find("select[name=work_spart_code]").html("<option value=''>소분류</option>");
+	}
+
+	//조직도 관리 수정 기능 추가
+	if(part_depth != 1 && gf_isNull(bpart_code))	bpart_code = toNN(form_obj.find("input[name=work_bpart_code]").val());
+	if(part_depth == 3 && gf_isNull(mpart_code))	mpart_code = toNN(form_obj.find("input[name=work_mpart_code]").val());
+
+	if(obj.val() == "") return;
+
+	var fvData = "work_bpart_code="+bpart_code+"&work_mpart_code="+mpart_code+"&work_part_depth="+part_depth+"&work_perm_check="+perm_check;
+	if(!gf_isNull(it_business_code))	fvData = "work_bpart_code="+bpart_code+"&work_mpart_code="+mpart_code+"&work_part_depth="+part_depth+"&work_perm_check="+perm_check+"&business_code="+it_business_code;
+
+	$.ajax({
+		type: "POST",
+		url: "../common/get_work_group_code_list.jsp",
+		data: fvData,
+		async: false,
+		dataType: "json",
+		success:function(dataJSON){
+			if(dataJSON.code != "ERR")
+			{
+				if(dataJSON.data.length > 0)
+				{
+					var html = "";
+					var code = "";
+					for(var i=0;i<dataJSON.data.length;i++)
+					{
+						code = (target_field=="work_mpart_code") ? dataJSON.data[i].mpart_code : (target_field=="work_bpart_code") ? dataJSON.data[i].bpart_code : dataJSON.data[i].spart_code;
+						html += "<option value='" + code + "'>" + dataJSON.data[i].part_name + "</option>";
+					}
+					form_obj.find("select[name=" + target_field	+ "]").append(html);
+				}
+				else
+				{
+					alert(target_name + "가 데이터가 없습니다.");
+					return false;
+				}
+			}
+			else
 			{
 				alert(dataJSON.msg);
 				return false;
@@ -759,6 +837,29 @@ var playRecFileMulti = function(loc) {
 	}
 };
 
+/**
+ * BEST/WORST
+ */
+var playBestWorst = function(loc) {
+	var selarray = $grid.pqGrid('selection', { type: 'row', method: 'getSelection' });
+	var len = selarray.length;
+	if(len == 0)
+	{
+		alert("먼저 왼쪽체크박스를 선택 후 BEST/WORST를 클릭하세요!");
+		return;
+	}
+
+	var info = "";
+	for(var i=0; i < len; i++)
+	{
+		var rowData = selarray[i].rowData;
+		var rec_datm = rowData["rec_datm"].replace(/\s|-|:|\./gi,"");
+
+		openPopup("../rec_search/bestworst.jsp?rec_datm="+rec_datm+"&rec_filename="+rowData["rec_filename"],"_memo","478","590","yes","center");
+	}
+	info = info.substr(1);
+
+};
 /**
  * 연관콜 청취 플레이어 연결
  */
