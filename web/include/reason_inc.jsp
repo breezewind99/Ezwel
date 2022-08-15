@@ -1,9 +1,16 @@
+<%@ page import="org.apache.log4j.lf5.viewer.LogFactor5Dialog" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/common/common.jsp" %>
+<%
+	String title = request.getParameter("title");
+	if (("").equals(title) || title == null) title = "청취/다운로드 사유등록";
+	logger.debug("Title" + title);
+%>
 <div class="modal inmodal" id="modalReasonForm" tabindex="-1" role="dialog" data-backdrop="static">
 	<div class="modal-dialog">
 		<div class="modal-content animated fadeIn">
 			<div class="modal-header">
-				<h4 class="modal-title">청취/다운로드 사유등록</h4>
+				<h4 class="modal-title"><%=title%></h4>
 			</div>
 			<div class="modal-body" >
 				<!--업무코드 table-->	

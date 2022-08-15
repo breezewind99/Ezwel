@@ -38,7 +38,9 @@
         <form id="reason_regi" method="post">
             <input type="hidden" id="_reason_code" name="_reason_code" value=""/>
             <input type="hidden" id="_reason_text" name="_reason_text" value=""/>
-            <jsp:include page="/include/reason_inc.jsp" flush="false"/>
+            <jsp:include page="/include/reason_inc.jsp" flush="false">
+                <jsp:param name="title" value="엑셀 다운로드 사유"/>
+            </jsp:include>
         </form>
     </div>
 </div>

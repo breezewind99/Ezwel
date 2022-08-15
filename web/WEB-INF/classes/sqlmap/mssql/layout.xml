@@ -122,7 +122,7 @@
 			union all
 			select 
 				A.user_id as part_code
-				,(A.business_code+A.bpart_code+A.mpart_code+A.spart_code) as parent_code
+				,(A.business_code+rtrim(A.bpart_code)+rtrim(A.mpart_code)+rtrim(A.spart_code)) as parent_code
 				,A.user_name as part_name
 				,'4' part_depth
 			from tbl_user A WITH(NOLOCK) 

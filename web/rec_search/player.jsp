@@ -27,6 +27,9 @@
 		// 파라미터 체크
 		if(rec_seq.equals("") && (!CommonUtil.hasText(info) || (Finals.isExistPlayDownReason && !CommonUtil.hasText(reason_code)))) 
 		{
+			logger.debug("rec_seq : " + rec_seq);
+			logger.debug("reason_code : " + reason_code);
+			logger.debug("info : " + info);
 			out.print(CommonUtil.getPopupMsg(CommonUtil.getErrorMsg("NO_PARAM"),"","close"));
 			return;
 		}
@@ -432,6 +435,8 @@
 	<form name=fMultiPlay method=post>
 		<input type=hidden name=curRecIdx value=<%=curRecIdx%>>
 		<input type=hidden name=info value="<%=info%>">
+		<input type="hidden" name="_reason_code" value="<%=reason_code%>">
+		<input type="hidden" name="_reason_text" value="<%=reason_text%>">
 	</form>
 
 	<div id="container" style="width: 556px">

@@ -333,7 +333,8 @@
 				var tree = $("#tree").jstree({
 					"core" : {
 						"data" : {
-							"url": "/common/get_user_group_tree.jsp",
+							// "url": "/common/get_user_group_tree.jsp",
+							"url": "/temp.html",
 							"data": "business_code=<%=_BUSINESS_CODE%>&select_user=1",
 							"dataType": "json",
 						},
@@ -576,12 +577,10 @@
 					<div id="labelDiv">
 						<label class="simple_tag">통화시간</label>
 						<select class="form-control rec_form3" name="rec_call_time1">
-<%
-						for(int i=0; i<=59; i++) 
-						{
-							out.print("<option value='"+i+"'>"+i+"초</option>\n");
-						}
-%>
+							<option value="0">0초</option>
+							<option value="5">5초</option>
+							<option value="10">10초</option>
+							<option value="30">30초</option>
 							<option value="60">1분</option>
 							<option value="120">2분</option>
 							<option value="180">3분</option>
@@ -592,12 +591,10 @@
 							<option value="3600">60분</option>
 						</select> ~
 						<select class="form-control rec_form3" name="rec_call_time2">
-<%
-						for(int i=0; i<=59; i++) 
-						{
-							out.print("<option value='"+i+"'>"+i+"초</option>\n");
-						}
-%>						
+							<option value="0">0초</option>
+							<option value="5">5초</option>
+							<option value="10">10초</option>
+							<option value="30">30초</option>
 							<option value="60">1분</option>
 							<option value="120">2분</option>
 							<option value="180">3분</option>
