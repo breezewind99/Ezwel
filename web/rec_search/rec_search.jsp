@@ -333,8 +333,8 @@
 				var tree = $("#tree").jstree({
 					"core" : {
 						"data" : {
-							// "url": "/common/get_user_group_tree.jsp",
-							"url": "/temp.html",
+							"url": "/common/get_user_group_tree.jsp",
+							//"url": "/temp.html",
 							"data": "business_code=<%=_BUSINESS_CODE%>&select_user=1",
 							"dataType": "json",
 						},
