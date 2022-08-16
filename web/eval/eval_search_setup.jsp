@@ -250,33 +250,32 @@
 										<td class="table-td">통화시간 <span class="required">*</span></td>
 										<td>
 											<select class="form-control eva_form5" name="rec_call_time1" id="rec_call_time1">
-												<option value="0" selected="selected">0초</option>
-												<script>
-												for(var i=5; i<=59; i++){
-													document.writeln("<option value='"+i+"'>"+i+"초</option>");
-												}
-												</script>
+												<option value="0">0초</option>
+												<option value="5">5초</option>
+												<option value="10">10초</option>
+												<option value="30">30초</option>
 												<option value="60">1분</option>
 												<option value="120">2분</option>
 												<option value="180">3분</option>
-												<option value="240">4분</option>
 												<option value="300">5분</option>
 												<option value="600">10분</option>
+												<option value="1200">20분</option>
+												<option value="1800">30분</option>
+												<option value="3600">60분</option>
 											</select> ~
 											<select class="form-control eva_form5" name="rec_call_time2" id="rec_call_time2">
-												<script>
-												for(var i=5; i<=59; i++){
-													document.writeln("<option value='"+i+"'>"+i+"초</option>");
-												}
-												</script>
+												<option value="0">0초</option>
+												<option value="5">5초</option>
+												<option value="10">10초</option>
+												<option value="30">30초</option>
 												<option value="60">1분</option>
 												<option value="120">2분</option>
 												<option value="180">3분</option>
-												<option value="240">4분</option>
 												<option value="300">5분</option>
 												<option value="600">10분</option>
+												<option value="1200">20분</option>
+												<option value="1800">30분</option>
 												<option value="3600">60분</option>
-												<option value="36000">60분 이상</option>
 											</select>
 										</td>
 									</tr>

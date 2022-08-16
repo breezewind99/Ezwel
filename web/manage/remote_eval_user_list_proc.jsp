@@ -44,6 +44,14 @@
 			argMap.put("pass_chg_term",pass_chg_term);
 			argMap.put("regi_ip",client_ip);
 			argMap.put("regi_id",_LOGIN_ID);
+			//아이디 중복 체크 - CJM(20181112)
+			int userIdChk = db.selectOne("user.userIdChk", argMap);
+
+			if(userIdChk > 0)
+			{
+				Site.writeJsonResult(out, false, "동일한 계정 ID가 존재합니다.");
+				return;
+			}
 
 			int ins_cnt = db.insert("user.insertEvalUser", argMap);
 			if(ins_cnt<1) {

@@ -432,6 +432,9 @@
 					<when test='idx=="v_rec_bak_code"'>
 						(case isnull(${item},'0') when '0' then '대기' when '1' then '성공' when '2' then '실패' else ${item} end) as ${idx}
 					</when>
+					<when test='idx=="v_rec_rate"'>
+						(case ${item} when '1' then 'BEST' when '2' then 'WORST' else '' end) as ${idx}
+					</when>
 					<!--<when test='idx=="v_rec_stt_code"'>
 						(case isnull(${item},'') when 'Y' then '업로드 성공' else isnull(${item},'') end) as ${idx}
 					</when>

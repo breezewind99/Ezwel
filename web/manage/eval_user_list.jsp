@@ -30,9 +30,7 @@ $(function () {
 		{ title: "순번", width: 60, dataIndx: "idx", editable: false, sortable: false },
 		{ title: "업무명", width: 80, dataIndx: "business_name", editable: false },
 
-		{ title: "대분류", width: 100, dataIndx: "bpart_name", editable: false },
-		{ title: "중분류", width: 100, dataIndx: "mpart_name", editable: false },
-		{ title: "소분류", width: 100, dataIndx: "spart_name", editable: false },
+
 
 		{ title: "평가자 ID", width: 80, dataIndx: "user_id", editable: false },
 		{ title: "비밀번호", width: 80, dataIndx: "user_pass",

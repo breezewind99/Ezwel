@@ -2369,4 +2369,20 @@ public class ComLib
 	public static String getSessionValue(HttpSession sess, String name) {
 		return toNN(sess.getAttribute(name));
 	}
+
+	/**
+	 * 말줄임 기능
+	 * getEllipsis
+	 * @param sBase
+	 * @param len
+	 * @return
+	 */
+	public static String getEllipsis(String sBase, int len)
+	{
+		if(sBase == null)	return "";
+		int sBaseLen = sBase.length();
+
+		if(sBaseLen > len)	return sBase.substring(0, len-1) + "…";
+		else return sBase;
+	}
 }
