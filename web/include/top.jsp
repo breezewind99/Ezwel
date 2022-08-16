@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@ include file="/common/common.jsp" %><%
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/common/common.jsp" %><%
 	if(!Site.isPmss(out,"","")) return;
 	
 	// cookie 변수 선언

@@ -10,7 +10,9 @@
 		Site.setExcelHeader(response, out, "상담사");
 	
 		db = new Db(true);
-	
+
+		String reason_code = CommonUtil.getParameter("_reason_code");
+		String reason_text = CommonUtil.getParameter("_reason_text");
 		// get parameter
 		String part_code = CommonUtil.getParameter("part_code");
 		String user_id = CommonUtil.getParameter("user_id", "");
@@ -78,7 +80,8 @@
 		selmap2.put("excel_menu", "상담사");
 		selmap2.put("excel_name", _LOGIN_NAME);
 		selmap2.put("excel_ip",request.getRemoteAddr());
-	
+		selmap2.put("reason_code",reason_code);
+		selmap2.put("reason_text",reason_text);
 		int ins_cnt = db.insert("hist_excel.insertExcelHist", selmap2);
 		//=========================================================================
 	

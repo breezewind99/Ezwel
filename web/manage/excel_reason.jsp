@@ -5,7 +5,6 @@
 
     try {
         Enumeration eParam = request.getParameterNames();
-        String page_name = CommonUtil.getParameter("page_id");
 %>
 <!DOCTYPE html>
 <html>
@@ -17,11 +16,7 @@
             // 등록 버튼 클릭
             $("button[name=modal_regi]").click(function () {
                 if (reasonFormChk()) {
-                    if("<%=page_name%>" == "user_list") {
-                        $("#reason_regi").attr("action", "../manage/excel_user_list.jsp");
-                    } else {
-                        $("#reason_regi").attr("action", "excel_rec_search.jsp");
-                    }
+                    $("#reason_regi").attr("action", "excel_rec_search.jsp");
                     $("#reason_regi").attr("target", "hiddenFrame");
                     $("#reason_regi").submit();
                 }

@@ -768,6 +768,7 @@ var playRecFile = function(rec_datm, local_no, rec_filename, rec_keycode, loc){
 	rec_datm = rec_datm.replace(/\s|-|:|\./gi,"");
 	var info = getEncData(rec_datm + "|" + local_no + "|" + rec_filename + "|" + rec_keycode, "1");
 
+	console.log(isExistPlayDownReason);
 	if(isExistPlayDownReason)
 	{
 		openPopup("../rec_search/player_reason.jsp?loc="+toNN(loc)+"&info="+encodeURIComponent(info),"_player","556","260","yes","center");//사유입력
@@ -1063,7 +1064,7 @@ var getBaseGridOption = function(page_id, paging_yn, excel_yn, new_yn, edit_yn) 
 						var sort_dir = $grid.pqGrid("option","dataModel.sortDir");
 						if(isExistPlayDownReason && isExcelReason.includes(page_id))
 						{
-							openPopup("../rec_search/excel_reason.jsp?"+$("#search").serialize()+"&cur_page="+cur_page+"&top_cnt="+top_cnt+"&sort_idx="+sort_idx+"&sort_dir="+sort_dir,"_download","556","260","yes","center");
+							openPopup("../rec_search/excel_reason.jsp?"+$("#search").serialize()+"&page_id="+ page_id + "&cur_page="+cur_page+"&top_cnt="+top_cnt+"&sort_idx="+sort_idx+"&sort_dir="+sort_dir,"_download","556","260","yes","center");
 						}
 						else
 						{
