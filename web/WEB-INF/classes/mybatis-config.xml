@@ -116,6 +116,7 @@
 		<mapper resource="sqlmap/mssql/manage/search_config.xml"/>
 		<mapper resource="sqlmap/mssql/manage/business.xml"/>
 		<mapper resource="sqlmap/mssql/manage/code.xml"/>
+		<mapper resource="sqlmap/mssql/manage/pcip.xml"/>
 
 		<mapper resource="sqlmap/mssql/rec_search/rec_search.xml"/>
 		<mapper resource="sqlmap/mssql/rec_search/rec_memo.xml"/>

@@ -22,6 +22,7 @@
 			{ title: "녹취일자", align: "center", colModel: [{ title: "시작일", align: "center", minWidth: 80, editable: false, dataIndx: "ss_fdate" }, { title: "종료일", align: "center", minWidth: 80, editable: false, dataIndx: "ss_tdate" }] },
 			{ title: "녹취시간", align: "center", colModel: [{ title: "시", align: "center", width: 50, editable: false, dataIndx: "ss_fhour" }, { title: "분", width: 50, align: "center", editable: false, dataIndx: "ss_fminute" }, { title: "시", width: 50, align: "center", editable: false, dataIndx: "ss_thour" }, { title: "분", width: 50, align: "center", editable: false, dataIndx: "ss_tminute" }] },
 			{ title: "통화시간", align: "center", colModel: [{ title: "초", align: "center", width: 50, editable: false, dataIndx: "ss_ftime" }, { title: "초", width: 50, align: "center", editable: false, dataIndx: "ss_ttime" }] },
+			{ title: "인/아웃", minWidth: 130, align: "center", dataIndx: "ss_inout", editable: false },
 			{ title: "선택", width: 40, align: "center", editable: false, sortable: false, render: function (ui) {
 				return "<img src='../img/icon/ico_view.png' class='btn_view' onclick='geCellText(" + ui.rowIndx + ");' style='cursor: pointer;'/>";
 			}
@@ -64,6 +65,7 @@
 		var ss_tminute = $.trim(data.ss_tminute);
 		var ss_ftime = $.trim(data.ss_ftime);
 		var ss_ttime = $.trim(data.ss_ttime);
+		var ss_inout = $.trim(data.ss_inout);
 	
 		$(opener.document).find("#rec_date1").val(ss_fdate);
 		$(opener.document).find("#rec_date2").val(ss_tdate);
@@ -73,6 +75,7 @@
 		$(opener.document).find("#rec_start_min2").val(ss_tminute);
 		$(opener.document).find("#rec_call_time1").val(ss_ftime);
 		$(opener.document).find("#rec_call_time2").val(ss_ttime);
+		$(opener.document).find("#rec_inout").val(ss_inout);
 		
 		self.close();
 	}

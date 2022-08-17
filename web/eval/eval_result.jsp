@@ -91,7 +91,7 @@
 				}
 			},
 			<%
-			if(userViewDepth>=3) {//사용자 권한이 관리자 이상일 경우만 삭제 가능
+			if(userViewDepth>=2) {//사용자 권한이 센터장 이상일 경우만 삭제 가능
 			%>
 			{ title: "삭제", width: 40, editable: false, sortable: false, render: function (ui) {
 					return "<img src='../img/icon/ico_delete.png' class='btn_delete' onclick='deleteEval("+ui.rowIndx+", \"" + ui.rowData["eval_user_id"] + "\");'/>";

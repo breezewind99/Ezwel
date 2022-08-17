@@ -32,6 +32,7 @@
 			{ title: "녹취일자", align: "center", colModel: [{ title: "시작일", align: "center", minWidth: 80, editable: false, dataIndx: "ss_fdate" }, { title: "종료일", align: "center", minWidth: 80, editable: false, dataIndx: "ss_tdate" }] },
 			{ title: "녹취시간", align: "center", colModel: [{ title: "시", align: "center", minWidth: 50, editable: false, sortable: false, dataIndx: "ss_fhour" }, { title: "분", minWidth: 50, align: "center", editable: false, sortable: false, dataIndx: "ss_fminute" }, { title: "시", minWidth: 50, align: "center", editable: false, sortable: false, dataIndx: "ss_thour" }, { title: "분", minWidth: 50, align: "center", editable: false, sortable: false, dataIndx: "ss_tminute" }] },
 			{ title: "통화시간", align: "center", colModel: [{ title: "초", align: "center", minWidth: 50, editable: false, sortable: false, dataIndx: "ss_ftime" }, { title: "초", minWidth: 50, align: "center", editable: false, sortable: false, dataIndx: "ss_ttime" }] },
+			{ title: "인/아웃", minWidth: 130, align: "center", dataIndx: "ss_inout", editable: false },
 			{ title: "수정", align: "center", maxWidth: 30, editable: false, sortable: false, render: function (ui) {
 				return "<img src='../img/icon/ico_edit.png' class='btn_edit' onclick='editEval("+ui.rowIndx+");'/>";
 			}},
@@ -121,6 +122,7 @@
 		var ss_ftime = $.trim(data.ss_ftime);
 		var ss_ttime = $.trim(data.ss_ttime);
 		var ss_seq = $.trim(data.ss_seq);
+		var ss_inout = $.trim(data.ss_inout);
 		var eval_order_max = $.trim(data.eval_order_max);
 	
 		if (event_status == 2) {
@@ -140,6 +142,7 @@
 		$("#rec_start_min2").val(ss_tminute);
 		$("#rec_call_time1").val(ss_ftime);
 		$("#rec_call_time2").val(ss_ttime);
+		$("#rec_inout").val(ss_inout);
 		$("#ss_seq").val(ss_seq);
 		$("#step").val("update");
 		
@@ -275,10 +278,21 @@
 												<option value="600">10분</option>
 												<option value="1200">20분</option>
 												<option value="1800">30분</option>
-												<option value="3600">60분</option>
+												<option value="3600" selected='selected'>60분</option>
+												<option value="36000">60분 이상</option>
 											</select>
 										</td>
 									</tr>
+									<tr>
+										<td class="table-td">인/아웃 <span class="required">*</span></td>
+										<td>
+												<select class="form-control eva_form5" name="rec_inout" id="rec_inout">
+													<option value="" selected="selected">전체</option>
+													<option value="I" >인</option>
+													<option value="O" >아웃</option>
+												</select>
+										</td>
+									<tr>
 								</table>
 								<!--메뉴 코드 영역 table 끝-->
 							</div>

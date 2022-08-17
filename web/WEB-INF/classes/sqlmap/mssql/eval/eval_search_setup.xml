@@ -33,6 +33,7 @@
 				,a.ss_tminute
 				,a.ss_ftime
 				,a.ss_ttime
+				,(case isnull(a.ss_inout,'') when '' then '전체' when 'I' then '인' when 'O' then '아웃' else isnull(a.ss_inout,'') end) as ss_inout
 				,a.event_code
 				,b.event_name
 				,b.event_status
@@ -68,6 +69,7 @@
 			,a.ss_tminute
 			,a.ss_ftime
 			,a.ss_ttime
+			,(case isnull(a.ss_inout,'') when '' then '전체' when 'I' then '인' when 'O' then '아웃' else isnull(a.ss_inout,'') end) as ss_inout
 			,a.event_code
 			,b.event_name
 			,b.event_status
@@ -83,9 +85,9 @@
 	<insert id="insertSetup" parameterType="map">
 		/* 조건 등록 insertSetup */
 		insert into tbl_search_setup (
-			user_id, event_code, ss_fdate, ss_tdate, ss_fhour, ss_thour, ss_fminute, ss_tminute, ss_ftime, ss_ttime
+			user_id, event_code, ss_fdate, ss_tdate, ss_fhour, ss_thour, ss_fminute, ss_tminute, ss_ftime, ss_ttime, ss_inout
 		) values (
-			#{user_id}, #{event_code}, #{ss_fdate}, #{ss_tdate}, #{ss_fhour}, #{ss_thour}, #{ss_fminute}, #{ss_tminute}, #{ss_ftime}, #{ss_ttime}
+			#{user_id}, #{event_code}, #{ss_fdate}, #{ss_tdate}, #{ss_fhour}, #{ss_thour}, #{ss_fminute}, #{ss_tminute}, #{ss_ftime}, #{ss_ttime}, #{ss_inout}
 		)
 	</insert>
 
@@ -103,6 +105,7 @@
 				,ss_tminute = #{ss_tminute}
 				,ss_ftime = #{ss_ftime}
 				,ss_ttime = #{ss_ttime}
+			    ,ss_inout = #{ss_inout}
 		where ss_seq = #{ss_seq}
 	</update>
 	

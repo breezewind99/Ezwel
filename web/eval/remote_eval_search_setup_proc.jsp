@@ -26,6 +26,7 @@
 			String rec_start_min2 = CommonUtil.getParameter("rec_start_min2");
 			String rec_call_time1 = CommonUtil.getParameter("rec_call_time1");
 			String rec_call_time2 = CommonUtil.getParameter("rec_call_time2");
+			String rec_inout = CommonUtil.getParameter("rec_inout");
 			
 			// 파라미터 체크
 			if(!CommonUtil.hasText(event_code_combo) 
@@ -52,6 +53,7 @@
 			argMap.put("ss_tminute",rec_start_min2);
 			argMap.put("ss_ftime",rec_call_time1);
 			argMap.put("ss_ttime",rec_call_time2);
+			argMap.put("ss_inout",rec_inout);
 			
 			
 			int ins_cnt = db.insert("eval_search_setup.insertSetup", argMap);
@@ -86,6 +88,7 @@
 			String rec_start_min2 = CommonUtil.getParameter("rec_start_min2");
 			String rec_call_time1 = CommonUtil.getParameter("rec_call_time1");
 			String rec_call_time2 = CommonUtil.getParameter("rec_call_time2");
+			String rec_inout = CommonUtil.getParameter("rec_inout");
 			
 			// 파라미터 체크
 			if(!CommonUtil.hasText(ss_seq) 
@@ -110,6 +113,7 @@
 			argMap.put("ss_tminute",rec_start_min2);
 			argMap.put("ss_ftime",rec_call_time1);
 			argMap.put("ss_ttime",rec_call_time2);
+			argMap.put("ss_inout",rec_inout);
 			
 			
 			int ins_cnt = db.update("eval_search_setup.updateSetup", argMap);

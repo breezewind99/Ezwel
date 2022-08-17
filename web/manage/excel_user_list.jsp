@@ -11,8 +11,8 @@
 	
 		db = new Db(true);
 
-		String reason_code = CommonUtil.getParameter("_reason_code");
-		String reason_text = CommonUtil.getParameter("_reason_text");
+		String reason_code = CommonUtil.getParameter("reason_code");
+		String reason_text = CommonUtil.getParameter("reason_text");
 		// get parameter
 		String part_code = CommonUtil.getParameter("part_code");
 		String user_id = CommonUtil.getParameter("user_id", "");

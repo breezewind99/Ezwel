@@ -275,8 +275,7 @@
 							html += "	<td>" + strToDateFormat(dataJSON.data[i].rec_date,"yyyy.MM.dd") + "</td>\n";
 							html += "	<td>" + dataJSON.data[i].rec_start_time + "</td>\n";
 							html += "	<td>" + dataJSON.data[i].rec_call_time + "</td>\n";
-							html += "	<td>" + dataJSON.data[i].cust_name + "</td>\n";
-							html += "	<td>" + toNN(dataJSON.data[i].custom_fld_04) + "</td>\n";
+							html += "	<td>" + dataJSON.data[i].rec_inout + "</td>\n";
 							html += "	<td><a href=\"#none\" onclick=\"playRecFile('" + dataJSON.data[i].rec_datm + "', '" + dataJSON.data[i].local_no + "', '" + dataJSON.data[i].rec_filename + "', '" + dataJSON.data[i].rec_keycode + "');\"><i class=\"fa fa-headphones fontIcon\"></i></a></td>\n";
 							html += "	<td><img src='../img/icon/ico_down.png' onclick=\"downloadRecFileEval('" + i + "');\" style='margin-left: 5px; cursor: pointer;'/></td>\n";
 							var order = (dataJSON.data[i].eval_order=="0") ? "" : dataJSON.data[i].eval_order + "차 ";//평가차수
@@ -737,35 +736,45 @@
 										<label class="simple_tag">통화시간</label>
 										<select class="form-control eva_form5" name="rec_call_time1" id="rec_call_time1">
 											<option value="0" selected="selected">0초</option>
-											<%
+											<!--<%
 												for (int i=5; i<=59; i++) {
 											%>
 											<option value="<%=i %>"><%=i %>초</option>
 											<%
 												}
-											%>
+											%>-->
+											<option value="5">5초</option>
+											<option value="10">10초</option>
+											<option value="30">30초</option>
 											<option value="60">1분</option>
 											<option value="120">2분</option>
 											<option value="180">3분</option>
-											<option value="240">4분</option>
 											<option value="300">5분</option>
 											<option value="600">10분</option>
+											<option value="1200">20분</option>
+											<option value="1800">30분</option>
+											<option value="3600">60분</option>
 										</select> ~
 										<select class="form-control eva_form5" name="rec_call_time2" id="rec_call_time2">
-											<%
+											<!--<%
 												for (int i=5; i<=59; i++) {
 											%>
 											<option value="<%=i %>"><%=i %>초</option>
 											<%
 												}
-											%>
+											%>-->
+											<option value="5">5초</option>
+											<option value="10">10초</option>
+											<option value="30">30초</option>
 											<option value="60">1분</option>
 											<option value="120">2분</option>
 											<option value="180">3분</option>
-											<option value="240">4분</option>
 											<option value="300">5분</option>
-											<option value="600" selected='selected'>10분</option>
+											<option value="600">10분</option>
+											<option value="1200">20분</option>
+											<option value="1800">30분</option>
 											<option value="3600">60분</option>
+											<option value="3600" selected='selected'>60분</option>
 											<option value="36000">60분 이상</option>
 										</select>
 									</div>
@@ -773,10 +782,21 @@
 
 								<div class="evaDiv4">
 									<div id="labelDiv">
+										<label class="simple_tag">인/아웃</label>
+										<select class="form-control eva_form5" name="rec_inout" id="rec_inout">
+											<option value="" selected="selected">전체</option>
+											<option value="I" >인</option>
+											<option value="O" >아웃</option>
+										</select>
+									</div>
+								</div>
+
+								<!--<div class="evaDiv4">
+									<div id="labelDiv">
 										<label class="simple_tag">검색어</label>
 										<input type="text" name="cust_name" class="form-control eva_form6" id="" placeholder="">
 									</div>
-								</div>
+								</div>-->
 								<!--2행 끝-->
 
 								<br>
@@ -788,8 +808,8 @@
 										<label style=cursor:pointer><input type=radio name=sortMethod value='A.rec_datm asc' onclick=chgSortMethod(this)> 녹취일시▲</label> &nbsp;
 										<label style=cursor:pointer><input type=radio name=sortMethod value='A.rec_call_time desc' onclick=chgSortMethod(this)> 녹음길이▼</label>
 										<label style=cursor:pointer><input type=radio name=sortMethod value='A.rec_call_time asc' onclick=chgSortMethod(this)> 녹음길이▲</label> &nbsp;
-										<label style=cursor:pointer><input type=radio name=sortMethod value='A.custom_fld_04 desc' onclick=chgSortMethod(this)> 안내번호▼</label>
-										<label style=cursor:pointer><input type=radio name=sortMethod value='A.custom_fld_04 asc' onclick=chgSortMethod(this)> 안내번호▲</label>
+										<!--<label style=cursor:pointer><input type=radio name=sortMethod value='A.custom_fld_04 desc' onclick=chgSortMethod(this)> 안내번호▼</label>
+										<label style=cursor:pointer><input type=radio name=sortMethod value='A.custom_fld_04 asc' onclick=chgSortMethod(this)> 안내번호▲</label>-->
 										</div>
 									</div>
 								</div>
@@ -824,8 +844,7 @@
 										<th>일자</th>
 										<th>시작시간</th>
 										<th>통화시간</th>
-										<th>검색어</th>
-										<th>안내번호</th>
+										<th>인/아웃</th>
 										<th>듣기</th>
 										<th>다운</th>
 										<th>평가상태</th>

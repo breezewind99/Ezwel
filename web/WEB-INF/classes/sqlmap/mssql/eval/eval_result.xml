@@ -184,7 +184,7 @@
 			and A.spart_code = #{spart_code}
 		</if>
 		<choose>
-			<when test='_user_level!="0" and _user_level!="A"'>
+			<when test='_user_level!="0" and _user_level!="A" and _user_level!="B"'>
 				and A.eval_status IN ('9', 'a', 'b')
 			</when>
 			<when test='eval_status!=null and eval_status!=""'>
@@ -273,7 +273,7 @@
 					and A.eval_order=#{eval_order}
 				</if>
 				<choose>
-					<when test='_user_level!="0" and _user_level!="A"'>
+					<when test='_user_level!="0" and _user_level!="A" and _user_level!="B"'>
 						and A.eval_status IN ('9', 'a', 'b')
 					</when>
 					<when test='eval_status!=null and eval_status!=""'>
@@ -355,7 +355,7 @@
 				and A.spart_code = #{spart_code}
 			</if>
 			<choose>
-				<when test='_user_level!="0" and _user_level!="A"'>
+				<when test='_user_level!="0" and _user_level!="A" and _user_level!="B"'>
 					and A.eval_status IN ('9', 'a', 'b')
 				</when>
 				<when test='eval_status!=null and eval_status!=""'>

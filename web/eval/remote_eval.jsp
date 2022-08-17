@@ -29,7 +29,8 @@
 		String user_id = CommonUtil.getParameter("user_id");
 		String cust_name = CommonUtil.getParameter("cust_name");
 		String sortMethod = CommonUtil.getParameter("sortMethod");
-		
+		String rec_inout = CommonUtil.getParameter("rec_inout");
+
 		JSONObject json = new JSONObject();
 
 		Map<String, Object> argMap = new HashMap<String, Object>();
@@ -83,6 +84,7 @@
 			argMap.put("rec_call_time2",DateUtil.getHmsToSec(Integer.parseInt(rec_call_time2)));
 			argMap.put("user_id", user_id);
 			argMap.put("cust_name", cust_name);
+			argMap.put("rec_inout", rec_inout);
 
 			argMap.put("event_code", event_code);
 			argMap.put("_eval_user_id", _LOGIN_ID);
