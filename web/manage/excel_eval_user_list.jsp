@@ -10,6 +10,8 @@ try {
 
 	db = new Db(true);
 
+
+
 	// get parameter
 	String regi_date1 = CommonUtil.getParameter("regi_date1", "");
 	String regi_date2 = CommonUtil.getParameter("regi_date2", "");
@@ -18,11 +20,25 @@ try {
 	String sort_idx = CommonUtil.getParameter("sort_idx", "regi_datm");
 	String sort_dir = CommonUtil.getParameter("sort_dir", "down");
 
+	String reason_code = CommonUtil.getParameter("reason_code");
+	String reason_text = CommonUtil.getParameter("reason_text");
+
+	// 2016.12.27 현원희 추가 -다운로드 이력
+	//=========================================================================
+	Map<String, Object> selmap2 = new HashMap();
+
+	selmap2.put("excel_id", _LOGIN_ID);
+	selmap2.put("excel_menu", "평가자");
+	selmap2.put("excel_name", _LOGIN_NAME);
+	selmap2.put("excel_ip",request.getRemoteAddr());
+	selmap2.put("reason_code",reason_code);
+	selmap2.put("reason_text",reason_text);
+	int ins_cnt = db.insert("hist_excel.insertExcelHist", selmap2);
+	//=========================================================================
+
 	sort_dir = ("down".equals(sort_dir)) ? "desc" : "asc";
 
 	StringBuffer sb = new StringBuffer();
-
-
 	sb.append("<table border='1' bordercolor='#bbbbbb'>");
 	sb.append("<tr align='center'>");
 	sb.append("<td class=th>업무 명</td>");

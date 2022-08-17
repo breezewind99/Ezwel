@@ -96,7 +96,7 @@
 <script>
 	var isDev = <%=Finals.isDev%>;
 	var isExistPlayDownReason = <%=Finals.isExistPlayDownReason%>;
-	var isExcelReason = ['rec_search','user_list'];
+	var isExcelReason = ['rec_search','user_list','eval_user_list'];
 </script>
 
 <body style="overflow-y: scroll;">

@@ -290,7 +290,7 @@
 							<label class="simple_tag">녹취시간</label>
 							<select class="form-control dept_form3" name="rec_hour1">
 							<%
-								for(int i=0; i<=23; i++) 
+								for(int i=0; i<=24; i++)
 								{
 									String tmp_hour = CommonUtil.getFormatString(Integer.toString(i), "00");
 									out.print("<option value='"+tmp_hour+"'>"+tmp_hour+"시</option>\n");
@@ -299,10 +299,10 @@
 							</select> ~
 							<select class="form-control dept_form3" name="rec_hour2">
 							<%
-								for(int i=0; i<=23; i++) 
+								for(int i=0; i<=24; i++)
 								{
 									String tmp_hour = CommonUtil.getFormatString(Integer.toString(i), "00");
-									out.print("<option value='"+tmp_hour+"'"+((i==23) ? " selected='selected'" : "")+">"+tmp_hour+"시</option>\n");
+									out.print("<option value='"+tmp_hour+"'"+((i==24) ? " selected='selected'" : "")+">"+tmp_hour+"시</option>\n");
 								}
 							%>
 							</select>

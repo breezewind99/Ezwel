@@ -1,39 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/common/common.jsp" %>
 <%
-	if(!Site.isPmss(out,"excel_hist","")) return;
+	if(!Site.isPmss(out,"down_hist","")) return;
 %>
 <jsp:include page="/include/top.jsp" flush="false"/>
 <script type="text/javascript">
+	//청취/다운 사유입력 유무
 	var isExistPlayDownReason = <%=Finals.isExistPlayDownReason%>;
+
 	$(function () 
-	{	
+	{
 		var colModel = [
 			{ title: "순번", width: 60, dataIndx: "idx", sortable: false },
-			{ title: "저장일시", width: 130, dataIndx: "excel_datm" },
-			{ title: "다운로드 메뉴", width: 130, dataIndx: "excel_menu" },
-			{ title: "대분류", width: 80, dataIndx: "bpart_name" },
-			{ title: "중분류", width: 80, dataIndx: "mpart_name" },
-			{ title: "소분류", width: 80, dataIndx: "spart_name" },
-			{ title: "로그인ID", width: 80, dataIndx: "excel_id" },
-			{ title: "로그인명", width: 80, dataIndx: "excel_name" },
-			{ title: "로그인IP", width: 100, dataIndx: "excel_ip" },
-	
+			{ title: "실행일시", width: 130, dataIndx: "delete_datm" },
+			{ title: "작업명", width: 80, dataIndx: "delete_type" },
+			{ title: "시작시간", width: 80, dataIndx: "start_datm" },
+			{ title: "종료시간", width: 80, dataIndx: "end_datm" },
+			{ title: "작업처리자", width: 80, dataIndx: "job_msg" },
+			{ title: "작업처리자IP", width: 80, dataIndx: "job_ip" },
+			{ title: "작업처리상세내용", width: 100, dataIndx: "job_desc" },
+			{ title: "상태", width: 130, dataIndx: "job_status" }
 		];
-
-		if(isExistPlayDownReason){
-			colModel.push( { title: "다운사유", width: 150, dataIndx: "reason_code_desc" } );
-			colModel.push( { title: "기타사유", width: 150, dataIndx: "reason_text" } );
-		}
 
 		var baseDataModel = getBaseGridDM("<%=page_id%>");
 		var dataModel = $.extend({}, baseDataModel, {
-			//sortIndx: "excel_datm",
-			sortDir: "down",
+			//sortIndx: "down_datm",
+			sortDir: "delete_datm",
 		});
 	
-	 	// 페이지 id, 페이징 사용여부, 엑셀다운로드 사용여부, 신규등록 사용여부, 수정 사용여부
-		var baseObj = getBaseGridOption("excel_hist", "Y", "Y", "N", "N");
+		// 페이지 id, 페이징 사용여부, 엑셀다운로드 사용여부, 신규등록 사용여부, 수정 사용여부
+		var baseObj = getBaseGridOption("down_hist", "Y", "Y", "N", "N");
 		var obj = $.extend({}, baseObj, {
 			colModel: colModel,
 			dataModel: dataModel,
@@ -42,14 +38,15 @@
 	
 		$grid = $("#grid").pqGrid(obj);
 	});
+	
 </script>
 
 	<!--title 영역 -->
 	<div class="row titleBar border-bottom2">
-		<div style="float:left;"><h4>excel저장 이력</h4></div>
+		<div style="float:left;"><h4>삭제 이력</h4></div>
 		<ol class="breadcrumb" style="float:right;">
 			<li><a href="#none"><i class="fa fa-home"></i> 이력</a></li>
-			<li class="active"><strong>excel저장 이력</strong>	</li>
+			<li class="active"><strong>삭제 이력</strong>	</li>
 		</ol>
 	</div>
 	<!--title 영역 끝 -->
@@ -66,10 +63,10 @@
 					<!--1행 시작-->
 					<div id="logDiv1">
 						<div id="labelDiv">
-							<label class="simple_tag">저장일자</label>
+							<label class="simple_tag">삭제일자</label>
 							<!-- 달력 팝업 위치 시작-->
 							<div class="input-group" style="display:inline-block;">
-								<input type="text" name="excel_date1" class="form-control log_form1 datepicker" value="<%=DateUtil.getToday("")%>" maxlength="10">
+								<input type="text" name="delete_date1" class="form-control log_form1 datepicker" value="<%=DateUtil.getToday("")%>" maxlength="10">
 								<div class="input-group-btn">
 									<button class="btn btn-default btn-datepicker" type="button"><i class="fa fa-calendar"></i></button>
 								</div>
@@ -78,7 +75,7 @@
 							<div class="input-group" style="display:inline-block;"><span class="form-control" style="padding: 3px 0px;border: 0px">~</span></div>
 							<!-- 달력 팝업 위치 시작-->
 							<div class="input-group" style="display:inline-block;">
-								<input type="text" name="excel_date2" class="form-control log_form1 datepicker" value="<%=DateUtil.getToday("")%>" maxlength="10">
+								<input type="text" name="delete_date2" class="form-control log_form1 datepicker" value="<%=DateUtil.getToday("")%>" maxlength="10">
 								<div class="input-group-btn">
 									<button class="btn btn-default btn-datepicker" type="button"><i class="fa fa-calendar"></i></button>
 								</div>
@@ -89,17 +86,14 @@
 
 					<div id="logDiv2">
 						<div id="labelDiv">
-							<label class="simple_tag">로그인ID</label><input type="text" name="excel_id" class="form-control log_form2" id="" placeholder="">
+							<label class="simple_tag">작업내용</label>
+							<select class="form-control rec_form5" name="delete_type">
+								<option value="" selected="selected">전체</option>
+								<option value="DB">DB 삭제이력</option>
+								<option value="FILE">File 삭제이력</option>
+							</select>
 						</div>
 					</div>
-
-					<div id="logDiv2">
-						<div id="label_Div">
-							<label class="simple_tag">로그인명</label><input type="text" name="excel_name" class="form-control log_form2" id="" placeholder="">
-					 	</div>
-					</div>
-					<!--1행 끝-->
-
 				</div>
 				<!--검색조건 영역 끝-->
 

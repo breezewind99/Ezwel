@@ -127,6 +127,7 @@
 		<mapper resource="sqlmap/mssql/log_hist/hist_login.xml"/>
 		<mapper resource="sqlmap/mssql/log_hist/hist_listen.xml"/>
 		<mapper resource="sqlmap/mssql/log_hist/hist_down.xml"/>
+		<mapper resource="sqlmap/mssql/log_hist/hist_delete.xml"/>
 		<mapper resource="sqlmap/mssql/log_hist/hist_rlisten.xml"/>
 		<mapper resource="sqlmap/mssql/log_hist/hist_user_change.xml"/>
 		<mapper resource="sqlmap/mssql/log_hist/hist_pass_change.xml"/>

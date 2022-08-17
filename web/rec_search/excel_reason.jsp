@@ -19,7 +19,9 @@
                 if (reasonFormChk()) {
                     var reason_code = $("select[name=reason_code]").val();
                     var reason_text = $("input[name=reason_text]").val();
-                    if("<%=page_name%>" == "user_list") {
+                    if("<%=page_name%>" == "eval_user_list") {
+                        $("#reason_regi").attr("action", "../manage/excel_eval_user_list.jsp?"+"reason_code="+reason_code+"&reason_text="+reason_text+"&"+$("#reason_regi").serialize());
+                    } else if("<%=page_name%>" == "user_list") {
                         $("#reason_regi").attr("action", "../manage/excel_user_list.jsp?"+"reason_code="+reason_code+"&reason_text="+reason_text+"&"+$("#reason_regi").serialize());
                     } else {
                         $("#reason_regi").attr("action", "excel_rec_search.jsp?"+"reason_code="+reason_code+"&reason_text="+reason_text+"&"+$("#reason_regi").serialize());
