@@ -28,13 +28,13 @@
 			select top ${end_cnt}
 				ROW_NUMBER() OVER(order by delete_datm desc) as rownum
 				,convert(varchar(19),a.delete_datm,121) delete_datm
-			    ,delete_type
+			    ,CASE delete_type WHEN 'DB' THEN 'DB 삭제작업' WHEN 'FILE' THEN 'FILE 삭제작업' ELSE 'CHECK' END as delete_type
 				,convert(varchar(19),a.start_datm,121) start_datm
 				,convert(varchar(19),a.end_datm,121) end_datm
 				,job_msg
 				,job_ip
 				,job_desc
-				,job_status
+				,CASE job_status WHEN 1 THEN '정상' ELSE '오류' END as job_status
 			from tbl_delete_hist as a WITH(NOLOCK)
 			where a.delete_datm between convert(datetime, #{delete_date1} + ' 00:00:00.000') and convert(datetime, #{delete_date2} + ' 23:59:59.997')
 			<if test='delete_type!=null and delete_type!=""'>
@@ -50,13 +50,13 @@
 		/* 삭제 이력 전체 조회 selectListAll */
 		select
 			,convert(varchar(19),a.delete_datm,121) delete_datm
-			,delete_type
+			,CASE delete_type WHEN 'DB' THEN 'DB 삭제작업' WHEN 'FILE' THEN 'FILE 삭제작업' ELSE 'CHECK' END as delete_type
 			,convert(varchar(19),a.start_datm,121) start_datm
 			,convert(varchar(19),a.end_datm,121) end_datm
 			,job_msg
 			,job_ip
 			,job_desc
-			,job_status
+			,CASE job_status WHEN 1 THEN '정상' ELSE '오류' END as job_status
 		from tbl_down_hist as a WITH(NOLOCK)
 		where delete_datm between convert(datetime, #{delete_date1} + ' 00:00:00.000') and convert(datetime, #{delete_date2} + ' 23:59:59.997')
 		<if test='delete_type!=null and delete_type!=""'>

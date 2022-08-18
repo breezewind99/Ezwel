@@ -12,14 +12,14 @@
 	{
 		var colModel = [
 			{ title: "순번", width: 60, dataIndx: "idx", sortable: false },
-			{ title: "실행일시", width: 130, dataIndx: "delete_datm" },
+			{ title: "실행일시", width: 80, dataIndx: "delete_datm" },
 			{ title: "작업명", width: 80, dataIndx: "delete_type" },
 			{ title: "시작시간", width: 80, dataIndx: "start_datm" },
 			{ title: "종료시간", width: 80, dataIndx: "end_datm" },
 			{ title: "작업처리자", width: 80, dataIndx: "job_msg" },
 			{ title: "작업처리자IP", width: 80, dataIndx: "job_ip" },
-			{ title: "작업처리상세내용", width: 100, dataIndx: "job_desc" },
-			{ title: "상태", width: 130, dataIndx: "job_status" }
+			{ title: "작업처리상세내용", width: 150, dataIndx: "job_desc" },
+			{ title: "상태", width: 80, dataIndx: "job_status" }
 		];
 
 		var baseDataModel = getBaseGridDM("<%=page_id%>");
@@ -29,7 +29,7 @@
 		});
 	
 		// 페이지 id, 페이징 사용여부, 엑셀다운로드 사용여부, 신규등록 사용여부, 수정 사용여부
-		var baseObj = getBaseGridOption("down_hist", "Y", "Y", "N", "N");
+		var baseObj = getBaseGridOption("<%=page_id%>", "Y", "N", "N", "N");
 		var obj = $.extend({}, baseObj, {
 			colModel: colModel,
 			dataModel: dataModel,
