@@ -44,6 +44,7 @@
 		
 		sb.append("<table border='1' bordercolor='#bbbbbb'>");
 		sb.append("<tr align='center'>");
+		sb.append("<td class=th>순번</td>");
 		sb.append("<td class=th>상담원ID</td>");
 		sb.append("<td class=th>상담사명</td>");
 		sb.append("<td class=th>내선번호</td>");
@@ -90,6 +91,7 @@
 			for(Map<String, Object> item : list) 
 			{
 				sb.append("<tr>");
+				sb.append("<td>" + item.get("idx") + "</td>");
 				sb.append("<td>" + item.get("user_id") + "</td>");
 				sb.append("<td>" + item.get("user_name") + "</td>");
 				sb.append("<td>" + item.get("local_no") + "</td>");

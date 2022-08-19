@@ -119,17 +119,12 @@
 		}
 		else
 		{
-			//상담원 수정 기본 정보 - CJM(20190516)
-			argMap.put("user_ip", data.get("user_ip"));
-			argMap.put("upd_id", login_id);
-			argMap.put("upd_ip", login_ip);
-
-			logger.debug("IP : " + login_ip + ", Database IP : " + data.get("user_ip").toString());
-			if(!"".equals(data.get("user_ip").toString())) {
-				if (!login_ip.equals(data.get("user_ip").toString())) {
-					Site.writeJsonResult(out, false, "해당 아이디의 접근 IP가 등록된 IP와 달라 로그인 하실수 없습니다.");
-					return;
-				}
+			//사용자 PC IP 허용정보 Check
+			int pcipCnt = db.selectOne("login.selectPcipCheck", login_ip);
+			if(pcipCnt == 0)
+			{
+				Site.writeJsonResult(out, false, "해당 PC의 IP ( " + login_ip + " ) 가 \\n접근허용 되지않아 로그인 하실수 없습니다. 관리자에게 문의 바랍니다");
+				return;
 			}
 
 			/*

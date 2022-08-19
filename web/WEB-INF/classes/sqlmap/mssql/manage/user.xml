@@ -144,10 +144,11 @@
 	<!-- 사용자 전체 조회 (엑셀다운로드) selectListAll -->
 	<select id="selectListAll" parameterType="map" resultType="map">
 		/* 사용자 전체 조회 (엑셀다운로드) selectListAll */
-		select user_id, '' user_pass, user_name, local_no, channel_no, use_yn
+		select ROW_NUMBER() OVER(order by regi_datm desc) AS idx
+		,user_id, '' user_pass, user_name, local_no, channel_no, use_yn
 			,system_code
-			,isnull((select system_name 
-					from tbl_system WITH(NOLOCK) 
+			,isnull((select system_name
+					from tbl_system WITH(NOLOCK)
 					where system_code = tbl_user.system_code), '') system_name
 			,user_level, user_level origin_level, dbo.fn_GetCodeName('USER_LEVEL',user_level) user_level_desc
 			,pass_chg_term, (case pass_chg_term when 0 then '제한없음' else cast(pass_chg_term as varchar) + '일' end) pass_chg_term_desc

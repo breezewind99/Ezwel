@@ -265,7 +265,7 @@
 								</tr>
 								<tr>
 									<td class="table-td">설명</td>
-									<td><textarea class="form-control message-input2" name="cate_desc" placeholder=""></textarea></td>
+									<td><textarea style="resize: none;" class="form-control message-input2" name="cate_desc" placeholder=""></textarea></td>
 								</tr>
 								<tr>
 									<td class="table-td">비고</td>

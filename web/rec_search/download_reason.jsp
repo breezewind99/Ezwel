@@ -21,10 +21,13 @@
         $(function () {
             // 등록 버튼 클릭
             $("button[name=modal_regi]").click(function () {
+                var reason_code = $("select[name=reason_code]").val();
+                var reason_text = $("input[name=reason_text]").val();
                 if (reasonFormChk()) {
-                    $("#reason_regi").attr("action", "download.jsp");
+                    $("#reason_regi").attr("action", "download.jsp?"+"reason_code="+reason_code+"&reason_text="+reason_text+"&"+$("#reason_regi").serialize());
                     $("#reason_regi").attr("target", "hiddenFrame");
                     $("#reason_regi").submit();
+                    alert("녹취파일 다운로드가 완료되었습니다. \n아래 표시줄에서 파일 확인해주십시오");
                 }
             });
         });

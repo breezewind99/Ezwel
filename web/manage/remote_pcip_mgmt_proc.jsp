@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/common/common.jsp" %>
 <%
-	if(!Site.isPmss(out,"menu_perm","json")) return;
+	if(!Site.isPmss(out,"pcip_mgmt","json")) return;
 
 	Db db = null;
 
@@ -18,11 +18,24 @@
 		{
 			// get parameter
 			String pc_ip = CommonUtil.getParameter("pc_ip");
+			String use_yn = CommonUtil.getParameter("use_yn");
+			String bigo = CommonUtil.getParameter("bigo");
 
 			argMap.put("pc_ip",pc_ip);
-			argMap.put("use_yn","1");
+			argMap.put("use_yn",use_yn);
+			argMap.put("bigo",bigo);
 
-			int ins_cnt = db.insert("business.insertCode", argMap);
+			// duplicate check
+			argMap.put("pc_ip",pc_ip);
+
+			String result_code = db.selectOne("pcip.selectDuplicateCheck", argMap);
+			if(!"OK".equals(result_code))
+			{
+				Site.writeJsonResult(out, false, "중복된 IP가 존재합니다");
+				return;
+			}
+
+			int ins_cnt = db.insert("pcip.insertPcip", argMap);
 			if(ins_cnt < 1)
 			{
 				Site.writeJsonResult(out, false, "등록에 실패했습니다.");
@@ -57,24 +70,12 @@
 				JSONObject jsonItem = (JSONObject) iterator.next();
 
 				argMap.clear();
-				argMap.put("business_code",jsonItem.get("business_code"));
-				argMap.put("menu_code",jsonItem.get("menu_code"));
-				argMap.put("menu_name",jsonItem.get("menu_name"));
-				argMap.put("user_level",jsonItem.get("user_level"));
-				//argMap.put("order_no",jsonItem.get("order_no"));
+				argMap.put("pc_ip",jsonItem.get("pc_ip"));
+				argMap.put("ori_pc_ip",jsonItem.get("ori_pc_ip"));
+				argMap.put("use_yn",jsonItem.get("use_yn"));
+				argMap.put("bigo",jsonItem.get("bigo"));
 
-				//상위메뉴에 속한 하위 메뉴가 수정 될 경우 비활성화 처리 - CJM(20190715)
-				if(parentCode != null && jsonItem.get("parent_code").equals(parentCode))	argMap.put("use_yn", "0");
-				else																		argMap.put("use_yn", jsonItem.get("use_yn"));
-
-				upd_cnt += db.update("menu.updateMenu", argMap);
-				
-				//상위 메뉴 사용 여부 비활성화 할 경우 하위 메뉴 비활성 처리 - CJM(20190715)
-				if("1".equals(jsonItem.get("menu_depth").toString()) && "0".equals(jsonItem.get("use_yn")))
-				{
-					db.update("menu.updateParentMenu", argMap);
-					parentCode = jsonItem.get("menu_code").toString();
-				}
+				upd_cnt += db.update("pcip.updatePcip", argMap);
 			}
 
 			if(upd_cnt < 1) 
@@ -82,7 +83,26 @@
 				Site.writeJsonResult(out, false, "업데이트에 실패했습니다.");
 				return;
 			}
-		} 
+		}
+		else if("delete".equals(step))
+		{
+			// get parameter
+			String pc_ip = CommonUtil.getParameter("row_id");
+
+			// 파라미터 체크
+			if(!CommonUtil.hasText(pc_ip))
+			{
+				Site.writeJsonResult(out, false, CommonUtil.getErrorMsg("NO_PARAM"));
+				return;
+			}
+
+			int del_cnt = db.delete("pcip.deletePcip", pc_ip);
+			if(del_cnt < 1)
+			{
+				Site.writeJsonResult(out, false, "삭제에 실패했습니다.");
+				return;
+			}
+		}
 		else 
 		{
 			Site.writeJsonResult(out, false, CommonUtil.getErrorMsg("NO_PARAM"));

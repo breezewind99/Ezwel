@@ -130,7 +130,6 @@
 						<li class=""><a href="menu_perm.jsp">메뉴 접근권한</a></li>
 						<li class=""><a href="search_perm.jsp">조회 접근권한</a></li>
 						<li class="active"><a href="result_perm.jsp">리스트 접근권한</a></li>
-						<li class=""><a href="pcip_perm.jsp">PC-IP 접근권한</a></li>
 					</ul>
 				</div>
 			</div>

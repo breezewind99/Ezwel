@@ -130,7 +130,7 @@ public class Finals
 
 	//평가관리 관련 기능 미노출 여부
 	//미노출 : true 노출 : false
-	public static final boolean		isEval = true;
+	public static final boolean		isEval = false;
 	//평가 최대 차수
 	public static int 				EVAL_ORDER_MAX = 16;
 	//평가수행 프로그램명 (평가자가 아니면 평가수행 메뉴 안보이게 하기 위함 (top.jsp)

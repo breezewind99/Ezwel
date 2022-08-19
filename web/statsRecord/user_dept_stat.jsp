@@ -6,22 +6,22 @@
 
 	Db db = null;
 
-	try 
+	try
 	{
 		// DB Connection
 		db = new Db(true);
-	
+
 		Map<String, Object> argMap = new HashMap<String, Object>();
 		argMap.put("business_code", _BUSINESS_CODE);
 		argMap.put("part_depth", "1");
-	
+
 		// 사용자 권한에 따른 조직도 조회
 		argMap.put("_user_level", _LOGIN_LEVEL);
 		argMap.put("_bpart_code",_BPART_CODE);
 		argMap.put("_mpart_code",_MPART_CODE);
 		argMap.put("_spart_code",_SPART_CODE);
 		argMap.put("_default_code",_PART_DEFAULT_CODE);
-	
+
 		//조직도 콤보박스
 		String htm_bpart_list = Site.getMyPartCodeComboHtml(session, 1);
 		String htm_mpart_list = Site.getMyPartCodeComboHtml(session, 2);
@@ -36,7 +36,7 @@
 <script type="text/javascript" src="../js/plugins/chart/plugins/jqplot.categoryAxisRenderer.min.js"></script>
 <script type="text/javascript" src="../js/plugins/chart/plugins/jqplot.pointLabels.min.js"></script>
 <script type="text/javascript">
-	$(function () 
+	$(function ()
 	{
 		var colModel = [
 			{ title: "구분", width: 80, dataIndx: "user_name" },
@@ -70,9 +70,14 @@
 					return $.number(ui.rowData["one_under_cnt"]);
 				},
 			},
-			{ title: "1분이상~5분미만", width: 80, dataIndx: "one_five_cnt",
+			{ title: "1분이상~3분미만", width: 80, dataIndx: "one_three_cnt",
 				render: function(ui) {
-					return $.number(ui.rowData["one_five_cnt"]);
+					return $.number(ui.rowData["one_three_cnt"]);
+				},
+			},
+			{ title: "3분이상~5분미만", width: 80, dataIndx: "three_five_cnt",
+				render: function(ui) {
+					return $.number(ui.rowData["three_five_cnt"]);
 				},
 			},
 			{ title: "5분이상~10분미만", width: 80, dataIndx: "five_ten_cnt",
@@ -86,9 +91,9 @@
 				},
 			}
 		];
-	
+
 		var baseDataModel = getBaseGridDM("<%=page_id%>");
-		
+
 		var dataModel = $.extend({}, baseDataModel, {
 			sorting: "local",
 			//sortIndx: "rec_date",
@@ -96,19 +101,19 @@
 			//sortIndx: ["user_name", "rec_date"],
 			//sortDir: ["up", "down"],
 		});
-	
+
 		// 페이지 id, 페이징 사용여부, 엑셀다운로드 사용여부, 신규등록 사용여부, 수정 사용여부
 		var baseObj = getBaseGridOption("user_dept_stat", "N", "Y", "N", "N");
 		// toolbar button add
 		baseObj.toolbar.items.push(
 				{ type: "button", icon: "ui-icon-graph", label: "그래프", style: "float: right; margin-right: 5px;", attr: "data-toggle='modal'",  listeners: [{
-		 			"click": function () {
-		 				popStatGraph();
-		 			}
-				}]
-			}
+						"click": function () {
+							popStatGraph();
+						}
+					}]
+				}
 		);
-	
+
 		var obj = $.extend({}, baseObj, {
 			colModel: colModel,
 			dataModel: dataModel,
@@ -117,26 +122,26 @@
 			load: function(evt, ui) {
 				// 통계 총계 style 수정
 				var data = ui.dataModel.data;
-	
+
 				if(data.length>0) {
 					$grid.pqGrid("addClass", { rowIndx: data.length-1, cls: 'pq-row-enforce' });
 				}
 			},*/
 		});
-		
+
 		var $summary = "";
 		obj.render = function (evt, ui) {
 			$summary = $("<div class='pq-grid-summary'></div>")
-			.prependTo($(".pq-grid-bottom", this));
+					.prependTo($(".pq-grid-bottom", this));
 		}
-		
+
 		obj.refresh = function (evt, ui) {
 			var data = ui.dataModel.data;
-			var sum_tot_cnt = 0, sum_in_cnt = 0, sum_out_cnt = 0, sum_local_cnt = 0, sum_tot_call_sec = 0, sum_avg_call_sec = 0, sum_one_under_cnt = 0, sum_one_five_cnt = 0, sum_five_ten_cnt = 0, sum_ten_over_cnt = 0;
-	
-			if(data != undefined && data.length > 0) 
+			var sum_tot_cnt = 0, sum_in_cnt = 0, sum_out_cnt = 0, sum_local_cnt = 0, sum_tot_call_sec = 0, sum_avg_call_sec = 0, sum_one_under_cnt = 0, sum_one_three_cnt = 0, sum_three_five_cnt = 0, sum_five_ten_cnt = 0, sum_ten_over_cnt = 0;
+
+			if(data != undefined && data.length > 0)
 			{
-				for(var i=0;i<data.length;i++) 
+				for(var i=0;i<data.length;i++)
 				{
 					sum_tot_cnt += parseInt(data[i].tot_cnt);
 					sum_in_cnt += parseInt(data[i].in_cnt);
@@ -145,12 +150,13 @@
 					sum_tot_call_sec += parseInt(data[i].tot_call_sec);
 					sum_avg_call_sec += parseInt(data[i].avg_call_sec);
 					sum_one_under_cnt += parseInt(data[i].one_under_cnt);
-					sum_one_five_cnt += parseInt(data[i].one_five_cnt);
+					sum_one_three_cnt += parseInt(data[i].one_three_cnt);
+					sum_three_five_cnt += parseInt(data[i].three_five_cnt);
 					sum_five_ten_cnt += parseInt(data[i].five_ten_cnt);
 					sum_ten_over_cnt += parseInt(data[i].ten_over_cnt);
 				}
 			}
-	
+
 			var sum = [{ "user_name":"<b>총계</b>","v_rec_date":""}];
 			sum[0].tot_cnt = sum_tot_cnt;
 			sum[0].in_cnt = sum_in_cnt;
@@ -159,38 +165,39 @@
 			sum[0].tot_call_time = getHmsToSec(sum_tot_call_sec);
 			sum[0].avg_call_time = getHmsToSec(sum_avg_call_sec);
 			sum[0].one_under_cnt = sum_one_under_cnt;
-			sum[0].one_five_cnt = sum_one_five_cnt;
+			sum[0].one_three_cnt = sum_one_three_cnt;
+			sum[0].three_five_cnt = sum_three_five_cnt;
 			sum[0].five_ten_cnt = sum_five_ten_cnt;
 			sum[0].ten_over_cnt = sum_ten_over_cnt;
-	
+
 			var obj = { data: sum, $cont: $summary };
 			$(this).pqGrid("createTable", obj);
-	
+
 			// data refresh가 될 경우 그래프 내의 user_id select box 초기화
 			$("#modalStatGraph select[name=user_id]").html("");
 		}
-		
+
 		// grid
 		$grid = $("#grid").pqGrid(obj);
-		
+
 		// graph open
 		var popStatGraph = function () {
 			var data = $grid.pqGrid("option", "dataModel.data");
 			var chartTick = [], chartData = [];
-	
-			if(data != undefined && data.length > 0) 
+
+			if(data != undefined && data.length > 0)
 			{
 				var data_user_id = {};
 				var obj_user_id = $("#modalStatGraph select[name=user_id]");
-	
-				if(obj_user_id.html().trim() == "") 
+
+				if(obj_user_id.html().trim() == "")
 				{
 					// user_id json 데이터 생성
-					for(var i=0;i<data.length;i++) 
+					for(var i=0;i<data.length;i++)
 					{
 						data_user_id[data[i].user_id] = data[i].user_name;
 					}
-	
+
 					// user_id select box 생성
 					var html = "";
 					$.each(data_user_id, function(key, val) {
@@ -198,66 +205,66 @@
 					});
 					obj_user_id.html(html);
 				}
-	
+
 				// 그래프 데이터 생성
 				var baseField = $("#modalStatGraph select[name=data_type]").val();
-	
-				for(var i=0; i<data.length; i++) 
+
+				for(var i=0; i<data.length; i++)
 				{
-					if(obj_user_id.val() == data[i].user_id) 
+					if(obj_user_id.val() == data[i].user_id)
 					{
 						chartTick.push(data[i].v_rec_date);
 						chartData.push(parseInt(eval("data[i]."+baseField)));
 					}
 				}
-			} 
-			else 
+			}
+			else
 			{
 				alert("데이터가 없습니다.");
 				return;
 			}
-	
+
 			// 상단 title 표시
 			$("#modalStatGraph #rec_date1").html($("#search input[name=rec_date1]").val());
 			$("#modalStatGraph #rec_date2").html($("#search input[name=rec_date2]").val());
 			$("#modalStatGraph #date_type").html($("#search select[name=date_type] option:selected").text());
-	
+
 			$("#modalStatGraph").modal("show");
-	
+
 			// graph
 			$("#chart").html("");
 			barChart("chart", "", chartTick, chartData);
 		};
-	
+
 		$("#modalStatGraph select[name=user_id], #modalStatGraph select[name=data_type]").change(function(){
 			popStatGraph();
 		});
-		
+
 		/*
 			조직도 정보 노출 기능 강화 - CJM(20200421)
 			조직 정보 누락되는 현상 개선
 		*/
 		if(($('select[name=mpart_code]').size() == 1 && $('select[name=mpart_code]').val() == ""))		$('select[name=bpart_code]').change();
 		else if(($('select[name=spart_code]').size() == 1 && $('select[name=spart_code]').val() == ""))	$('select[name=mpart_code]').change();
-		
+
 	});
 </script>
 
-	<!--title 영역 -->
-	<div class="row titleBar border-bottom2">
-		<div style="float:left;"><h4>상담사/부서별 통계</h4></div>
-		<ol class="breadcrumb" style="float:right;">
-			<li><a href="#none"><i class="fa fa-home"></i> 녹취 통계</a></li>
-			<li class="active"><strong>상담사/부서별 통계</strong></li>
-		</ol>
-	</div>
-	<!--title 영역 끝 -->
+<!--title 영역 -->
+<div class="row titleBar border-bottom2">
+	<div style="float:left;"><h4>상담사/부서별 통계</h4></div>
+	<ol class="breadcrumb" style="float:right;">
+		<li><a href="#none"><i class="fa fa-home"></i> 녹취 통계</a></li>
+		<li class="active"><strong>상담사/부서별 통계</strong></li>
+	</ol>
+</div>
+<!--title 영역 끝 -->
 
-	<!--wrapper-content영역-->
-	<div class="wrapper-content">
+<!--wrapper-content영역-->
+<div class="wrapper-content">
 
-		<!--ibox 시작-->
-		<div class="ibox">
+	<!--ibox 시작-->
+	<div class="ibox">
 		<form id="search">
 			<!--검색조건 영역-->
 			<div class="ibox-content-util-buttons">
@@ -289,22 +296,22 @@
 						<div id="labelDiv">
 							<label class="simple_tag">녹취시간</label>
 							<select class="form-control dept_form3" name="rec_hour1">
-							<%
-								for(int i=0; i<=24; i++)
-								{
-									String tmp_hour = CommonUtil.getFormatString(Integer.toString(i), "00");
-									out.print("<option value='"+tmp_hour+"'>"+tmp_hour+"시</option>\n");
-								}
-							%>
+								<%
+									for(int i=0; i<=24; i++)
+									{
+										String tmp_hour = CommonUtil.getFormatString(Integer.toString(i), "00");
+										out.print("<option value='"+tmp_hour+"'>"+tmp_hour+"시</option>\n");
+									}
+								%>
 							</select> ~
 							<select class="form-control dept_form3" name="rec_hour2">
-							<%
-								for(int i=0; i<=24; i++)
-								{
-									String tmp_hour = CommonUtil.getFormatString(Integer.toString(i), "00");
-									out.print("<option value='"+tmp_hour+"'"+((i==24) ? " selected='selected'" : "")+">"+tmp_hour+"시</option>\n");
-								}
-							%>
+								<%
+									for(int i=0; i<=24; i++)
+									{
+										String tmp_hour = CommonUtil.getFormatString(Integer.toString(i), "00");
+										out.print("<option value='"+tmp_hour+"'"+((i==24) ? " selected='selected'" : "")+">"+tmp_hour+"시</option>\n");
+									}
+								%>
 							</select>
 						</div>
 					</div>
@@ -316,7 +323,7 @@
 								<option value="US">상담사별</option>
 								<option value="DE">부서별</option>
 							</select>
-					 	</div>
+						</div>
 					</div>
 
 					<div id="deptDiv1">
@@ -383,63 +390,63 @@
 			</div>
 			<!--ibox 접히기, 설정버튼 영역2 끝-->
 		</form>
-		</div>
-		<!--ibox 끝-->
+	</div>
+	<!--ibox 끝-->
 
-		<!--Data table 영역-->
-		<div class="contentArea">
-			<!--grid 영역-->
-			<div id="grid"></div>
-			<!--grid 영역 끝-->
+	<!--Data table 영역-->
+	<div class="contentArea">
+		<!--grid 영역-->
+		<div id="grid"></div>
+		<!--grid 영역 끝-->
 
-			<!--그래프 보기 팝업창 띄우기-->
-			<div class="modal inmodal" id="modalStatGraph" tabindex="-1" role="dialog" aria-hidden="true">
-				<div class="modal-dialog2">
-					<div class="modal-content animated fadeIn">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-							<h4 class="modal-title">그래프 보기</h4>
+		<!--그래프 보기 팝업창 띄우기-->
+		<div class="modal inmodal" id="modalStatGraph" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog2">
+				<div class="modal-content animated fadeIn">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title">그래프 보기</h4>
+					</div>
+					<div class="modal-body">
+						<div class="colLeft bb">
+							<div class="bullet"><i class="fa fa-angle-right"></i></div><h5 class="table-title3">조회 기준</h5>
 						</div>
-						<div class="modal-body">
-							<div class="colLeft bb">
-								<div class="bullet"><i class="fa fa-angle-right"></i></div><h5 class="table-title3">조회 기준</h5>
-							</div>
 
-							<select class="form-control dept_form2 m-t" name="user_id">
-							</select>
+						<select class="form-control dept_form2 m-t" name="user_id">
+						</select>
 
-							<select class="form-control dept_form3 m-t" name="data_type">
-								<option value="tot_cnt">총 콜수</option>
-								<option value="in_cnt">IN</option>
-								<option value="out_cnt">OUT</option>
-								<option value="local_cnt">내선</option>
-							</select>
+						<select class="form-control dept_form3 m-t" name="data_type">
+							<option value="tot_cnt">총 콜수</option>
+							<option value="in_cnt">IN</option>
+							<option value="out_cnt">OUT</option>
+							<option value="local_cnt">내선</option>
+						</select>
 
-							<div class="colRight"><span id="rec_date1"></span> ~ <span id="rec_date2"></span> <span id="date_type"></span> 조회</div>
+						<div class="colRight"><span id="rec_date1"></span> ~ <span id="rec_date2"></span> <span id="date_type"></span> 조회</div>
 
-							<div class="tableRadius conSize b-t" style="padding: 20px 20px 10px 20px;">
-								<div id="chart" style="height: 400px;"></div>
-							</div>
+						<div class="tableRadius conSize b-t" style="padding: 20px 20px 10px 20px;">
+							<div id="chart" style="height: 400px;"></div>
 						</div>
-						<div class="modal-footer">
-						</div>
+					</div>
+					<div class="modal-footer">
 					</div>
 				</div>
 			</div>
-			<!--그래프 보기 팝업창 띄우기 끝-->
 		</div>
-		<!--Data table 영역 끝-->
+		<!--그래프 보기 팝업창 띄우기 끝-->
 	</div>
-	<!--wrapper-content영역 끝-->
+	<!--Data table 영역 끝-->
+</div>
+<!--wrapper-content영역 끝-->
 
 <jsp:include page="/include/bottom.jsp"/>
 <%
-	} 
-	catch(Exception e) 
+	}
+	catch(Exception e)
 	{
 		logger.error(e.getMessage());
-	} 
-	finally 
+	}
+	finally
 	{
 		if(db != null)	db.close();
 	}

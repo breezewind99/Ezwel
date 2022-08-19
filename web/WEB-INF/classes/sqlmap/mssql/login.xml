@@ -122,6 +122,15 @@
 		where user_id = #{login_id}
 	</select>
 
+	<!-- 사용자 PC iP 허용정보 체크 selectPcipCheck -->
+	<select id="selectPcipCheck" parameterType="string" resultType="int">
+		/* 사용자 PC iP 허용정보 체크 selectPcipCheck */
+		select count(*) as id_cnt
+		from crec_pcip_info WITH(NOLOCK)
+		where pc_ip = #{login_ip}
+		and use_yn = 'y'
+	</select>
+
 <!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: INSERT :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::  -->
 
 	<!-- 오늘 날짜 로그인 결과 신규 등록 insertLoginResult -->

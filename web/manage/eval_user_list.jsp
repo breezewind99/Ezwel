@@ -128,7 +128,7 @@ $(function () {
 	});
 
 	// 페이지 id, 페이징 사용여부, 엑셀다운로드 사용여부, 신규등록 사용여부, 수정 사용여부
-	var baseObj = getBaseGridOption("eval_user_list", "Y", "Y", "Y", "Y");
+	var baseObj = getBaseGridOption("eval_user_list", "Y", "Y", "N", "N");
 	var obj = $.extend({}, baseObj, {
 		colModel: colModel,
 		dataModel: dataModel,

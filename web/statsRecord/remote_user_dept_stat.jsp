@@ -5,7 +5,7 @@
 
 	Db db = null;
 
-	try 
+	try
 	{
 		db = new Db(true);
 
@@ -58,9 +58,9 @@
 		String ordarr[] = sort_idx.split(",");
 		String dirarr[] = sort_dir.split(",");
 
-		if(ordarr.length > 0) 
+		if(ordarr.length > 0)
 		{
-			for(int i=0; i<ordarr.length; i++) 
+			for(int i=0; i<ordarr.length; i++)
 			{
 				ordmap.put(("v_rec_date".equals(ordarr[i])) ? "rec_date" : ordarr[i], ("down".equals(dirarr[i])) ? "desc" : "asc");
 			}
@@ -77,13 +77,14 @@
 		int sum_out_cnt = 0;
 		int sum_local_cnt = 0;
 		int sum_one_under_cnt = 0;
-		int sum_one_five_cnt = 0;
+		int sum_one_three_cnt = 0;
+		int sum_three_five_cnt = 0;
 		int sum_five_ten_cnt = 0;
 		int sum_ten_over_cnt = 0;
-		
+
 		//logger.info("data : "+list);
 
-		for(Map<String, Object> item : list) 
+		for(Map<String, Object> item : list)
 		{
 			// 총계 저장
 			sum_tot_cnt += Integer.parseInt(item.get("tot_cnt").toString());
@@ -93,7 +94,8 @@
 			sum_out_cnt += Integer.parseInt(item.get("out_cnt").toString());
 			sum_local_cnt += Integer.parseInt(item.get("local_cnt").toString());
 			sum_one_under_cnt += Integer.parseInt(item.get("one_under_cnt").toString());
-			sum_one_five_cnt += Integer.parseInt(item.get("one_five_cnt").toString());
+			sum_one_three_cnt += Integer.parseInt(item.get("one_three_cnt").toString());
+			sum_three_five_cnt += Integer.parseInt(item.get("three_five_cnt").toString());
 			sum_five_ten_cnt += Integer.parseInt(item.get("five_ten_cnt").toString());
 			sum_ten_over_cnt += Integer.parseInt(item.get("ten_over_cnt").toString());
 			
@@ -122,16 +124,16 @@
 			*/
 
 			// 초 -> HH:mm:ss
-			if(item.containsKey("tot_call_time")) 
+			if(item.containsKey("tot_call_time"))
 			{
 				item.put("tot_call_sec", item.get("tot_call_time"));
 				//item.put("tot_call_time", DateUtil.getHmsToSec((Integer) item.get("tot_call_time")));
 				item.put("tot_call_time", DateUtil.getHmsToSec(Integer.parseInt(item.get("tot_call_time").toString())));
 				//
 			}
-			
+
 			// 초 -> HH:mm:ss
-			if(item.containsKey("avg_call_time")) 
+			if(item.containsKey("avg_call_time"))
 			{
 				item.put("avg_call_sec", item.get("avg_call_time"));
 				item.put("avg_call_time", DateUtil.getHmsToSec(Integer.parseInt(item.get("avg_call_time").toString())));
@@ -159,15 +161,15 @@
 
 			list.add(summap);
 		}*/
-		
+
 		json.put("data", list);
 		out.print(json.toJSONString());
-	} 
-	catch(Exception e) 
+	}
+	catch(Exception e)
 	{
 		logger.error(e.getMessage());
-	} 
-	finally 
+	}
+	finally
 	{
 		if(db != null)	db.close();
 	}
