@@ -12,7 +12,7 @@
     
     <appender name="Log_ToFILE" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="Threshold" value="DEBUG"/>
-        <param name="File" value="D:/java/log/crec.log" />
+        <param name="File" value="D:/WAS/log/crec.log" />
         <param name="Append" value="true" />
         <param name="DatePattern" value="'.'yyyy-MM-dd" />
         <layout class="org.apache.log4j.PatternLayout">

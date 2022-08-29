@@ -407,7 +407,7 @@
 				ROW_NUMBER() OVER(order by ${s.sort_idx} ${s.sort_dir}) as rownum
 				, convert(varchar,rec_datm,121) as rec_datm, local_no, rec_filename, rec_keycode
 				, system_code, company_code, business_code, bpart_code, mpart_code, spart_code
-				, convert(varchar(8),rec_call_time,108) as rec_call_time, user_name, cust_id, custom_fld_01, custom_fld_02, custom_fld_03
+				, convert(varchar(8),rec_call_time,108) as rec_call_time, user_name, cust_id, custom_fld_01, custom_fld_02, custom_fld_03 
 				, rec_stt_code
 			<foreach collection='r' index='idx' item='item' open=',' close='' separator=','>
 				<choose>
@@ -454,13 +454,13 @@
 						(case isnull(${item},'') when '1' then '미안내' when '2' then '생활안내' when '3' then '육성안내' when '4' then '자동안내' when '5' then '다량안내' else ${item} end) as ${idx}
 					</when>-->
 					<when test='idx=="v_custom_fld_04"'>
-						(select W_BName from crec_W_Bpart where W_BCode = ${item}) as ${idx}
+					  (select W_BName from crec_W_Bpart where W_BCode = ${item}) as ${idx}
 					</when>
 					<when test='idx=="v_custom_fld_05"'>
-						(select W_MName from crec_W_Mpart where W_MCode = ${item}) as ${idx}
+					  (select W_MName from crec_W_Mpart where W_MCode = ${item}) as ${idx}
 					</when>
 					<when test='idx=="v_custom_fld_06"'>
-						(select W_SName from crec_W_Spart where W_SCode = ${item}) as ${idx}
+					  (select W_SName from crec_W_Spart where W_SCode = ${item}) as ${idx}
 					</when>
 					<when test='idx=="v_cust_tel"'>
 						<!--(case when LEN(${item})>7 then LEFT(${item}, len(${item})-4) + '****' else ${item} end) as ${idx}

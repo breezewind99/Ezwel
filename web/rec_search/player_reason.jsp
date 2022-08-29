@@ -24,7 +24,7 @@
 		$("button[name=modal_regi]").click(function(){
 			if(reasonFormChk()) {
 				var reason_code = $("select[name=reason_code]").val();
-				var reason_text = $("input[name=reason_text]").val();
+                var reason_text = $("input[name=reason_text]").val();
 				$("#reason_regi").attr("action", "player.jsp?"+"reason_code="+reason_code+"&reason_text="+reason_text+"&"+$("#reason_regi").serialize());
 				$("#reason_regi").submit();
 			}

@@ -61,12 +61,12 @@
 		String user_list = CommonUtil.getParameter("user_list");
 
 		// 파라미터 체크
-		if(!CommonUtil.hasText(local_no1) && !CommonUtil.hasText(user_name) && !CommonUtil.hasText(user_id) && !CommonUtil.hasText(cust_tel) && "".equals(rec_inout) && "00".equals(rec_start_hour1))
+		if(!CommonUtil.hasText(local_no1) && !CommonUtil.hasText(user_name) && !CommonUtil.hasText(user_id) && !CommonUtil.hasText(cust_tel) && "".equals(rec_inout) && "00".equals(rec_start_hour1)) 
 		{
 			Site.writeJsonResult(out, false, "필수 조회값이 존재하지 않습니다. \\n(내선번호/상담원명/상담원ID/고객전화번호/인아웃/녹취시간)");
 			return;
 		}
-
+		
 		cur_page = (cur_page<1) ? 1 : cur_page;
 		sort_idx = ("v_".equals(CommonUtil.leftString(sort_idx, 2)) || "n_".equals(CommonUtil.leftString(sort_idx, 2))) ? sort_idx.substring(2) : sort_idx;
 		sort_dir = ("down".equals(sort_dir)) ? "desc" : "asc";
