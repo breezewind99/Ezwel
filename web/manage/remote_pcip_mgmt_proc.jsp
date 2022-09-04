@@ -5,7 +5,7 @@
 
 	Db db = null;
 
-	try 
+	try
 	{
 		db = new Db(true);
 
@@ -19,10 +19,12 @@
 			// get parameter
 			String pc_ip = CommonUtil.getParameter("pc_ip");
 			String use_yn = CommonUtil.getParameter("use_yn");
+			String local_no = CommonUtil.getParameter("local_no");
 			String bigo = CommonUtil.getParameter("bigo");
 
 			argMap.put("pc_ip",pc_ip);
 			argMap.put("use_yn",use_yn);
+			argMap.put("local_no",local_no);
 			argMap.put("bigo",bigo);
 
 			// duplicate check
@@ -48,7 +50,7 @@
 			String data_list = CommonUtil.getParameter("data_list");
 
 			// 파라미터 체크
-			if(!CommonUtil.hasText(data_list)) 
+			if(!CommonUtil.hasText(data_list))
 			{
 				Site.writeJsonResult(out, false, CommonUtil.getErrorMsg("NO_PARAM"));
 				return;
@@ -65,7 +67,7 @@
 
 			int upd_cnt = 0;
 			String parentCode = null;
-			while(iterator.hasNext()) 
+			while(iterator.hasNext())
 			{
 				JSONObject jsonItem = (JSONObject) iterator.next();
 
@@ -73,12 +75,13 @@
 				argMap.put("pc_ip",jsonItem.get("pc_ip"));
 				argMap.put("ori_pc_ip",jsonItem.get("ori_pc_ip"));
 				argMap.put("use_yn",jsonItem.get("use_yn"));
+				argMap.put("local_no",jsonItem.get("local_no"));
 				argMap.put("bigo",jsonItem.get("bigo"));
 
 				upd_cnt += db.update("pcip.updatePcip", argMap);
 			}
 
-			if(upd_cnt < 1) 
+			if(upd_cnt < 1)
 			{
 				Site.writeJsonResult(out, false, "업데이트에 실패했습니다.");
 				return;
@@ -103,19 +106,19 @@
 				return;
 			}
 		}
-		else 
+		else
 		{
 			Site.writeJsonResult(out, false, CommonUtil.getErrorMsg("NO_PARAM"));
 			return;
 		}
 
 		Site.writeJsonResult(out,true);
-	} 
-	catch(Exception e) 
+	}
+	catch(Exception e)
 	{
 		logger.error(e.getMessage());
-	} 
-	finally 
+	}
+	finally
 	{
 		if(db != null)	db.close();
 	}

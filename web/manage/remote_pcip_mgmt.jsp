@@ -5,13 +5,14 @@
 
 	Db db = null;
 
-	try 
+	try
 	{
 		db = new Db(true);
 
 
 		String pc_ip = CommonUtil.getParameter("pcip", "");
 		String use_yn = CommonUtil.getParameter("use_yn", "");
+		String local_no = CommonUtil.getParameter("local_no", "");
 		String bigo = CommonUtil.getParameter("bigo", "");
 
 
@@ -21,6 +22,7 @@
 
 		argMap.put("pc_ip", pc_ip);
 		argMap.put("use_yn", use_yn);
+		argMap.put("local_no", local_no);
 		argMap.put("bigo", bigo);
 
 		List<Map<String, Object>> list = db.selectList("pcip.selectList", argMap);
@@ -29,12 +31,12 @@
 
 		json.put("data", list);
 		out.print(json.toJSONString());
-	} 
-	catch(Exception e) 
+	}
+	catch(Exception e)
 	{
 		logger.error(e.getMessage());
-	} 
-	finally 
+	}
+	finally
 	{
 		if(db != null)	db.close();
 	}
