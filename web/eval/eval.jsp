@@ -93,7 +93,12 @@
 //				alert( $(this).val()+' '+ $(this).text()  );
 			});
 		});
-	
+
+		//달력 수동 입력시 - 자동 입력
+		$(".eva_form4").on("change keyup", function(e)
+		{
+			$(this).val(getDateToNum($(this).val().replace(/[^0-9]/g,""),"-"));
+		});
 	});
 
 	// 이벤트 선택

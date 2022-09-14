@@ -141,6 +141,18 @@
 					<!-- 시스템 끝 -->
 				</div>
 				<!--업무 구분 끝-->
+				<!--주의사항 구분-->
+				<div class="selectRadius1">*주의사항*</div>
+				<div class="selectRadius2" style="background-color: #FFF;">
+					<form id="outer_search">
+						<div class="table-td"> 1. 아이피 변경 후 10분 뒤 녹취 저장되므로 </div>
+						<div class="table-td">  업무 시작 시간 전 변경 필요 </div>
+						<div class="table-td"> 2. 아이피 입력 형식 :  </div>
+						<div class="table-td">  192.168.116.005 (X) , 192.168.116.5 (O) </div>
+					</form>
+					<!-- 시스템 끝 -->
+				</div>
+				<!--주의사항 구분 끝-->
 			</div>
 			<!--treeDiv1 끝-->
 			<!--Data table 영역-->

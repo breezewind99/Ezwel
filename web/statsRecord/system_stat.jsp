@@ -175,7 +175,12 @@
 		$("#modalStatGraph select[name=data_type]").change(function(){
 			popStatGraph();
 		});
-		
+
+		//달력 수동 입력시 - 자동 입력
+		$(".system_form1").on("change keyup", function(e)
+		{
+			$(this).val(getDateToNum($(this).val().replace(/[^0-9]/g,""),"-"));
+		});
 	});
 </script>
 

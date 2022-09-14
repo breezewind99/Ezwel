@@ -18,6 +18,7 @@
 		int top_cnt = CommonUtil.getParameterInt("top_cnt", "20");
 		String sort_idx = CommonUtil.getParameter("sort_idx", "regi_datm");
 		String sort_dir = CommonUtil.getParameter("sort_dir", "down");
+		String user_level = CommonUtil.getParameter("user_level", "");
 
 		cur_page = (cur_page < 1) ? 1 : cur_page;
 		sort_dir = ("down".equals(sort_dir)) ? "desc" : "asc";
@@ -57,6 +58,7 @@
 		argMap.put("user_id", user_id);
 		argMap.put("user_name", user_name);
 		argMap.put("local_no", local_no);
+		argMap.put("user_level", user_level);
 
 		// count
 		Map<String, Object> cntmap  = db.selectOne("user.selectCount", argMap);

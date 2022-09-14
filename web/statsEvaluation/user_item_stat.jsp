@@ -49,16 +49,16 @@
 			{
 				var eval_cnt = strTo(toNN(ui.rowData["eval_cnt"],1),0,1);
 				//alert(ui.rowData["eval_cnt"]+"="+eval_cnt)
-				return "<font color=blue>"+ui.rowData["best_cnt"]+"</font><font color=#aaaaaa>/</font><font color=red>"+ ui.rowData["worst_cnt"] +"</font><font color=#aaaaaa>/</font>"+ round(ui.rowData["eval_score"]/eval_cnt) +"<font color=#aaaaaa>/</font>"+ round(ui.rowData["exam_score_tot"]/eval_cnt) +"<font color=#aaaaaa>/</font>"+ ui.rowData["add_score_tot"] ;
+				return "<font color=blue>"+ui.rowData["best_cnt"]+"</font><font color=#aaaaaa>/</font><font color=red>"+ ui.rowData["worst_cnt"] +"</font><font color=#aaaaaa>/</font>"+ round(ui.rowData["eval_score"]/eval_cnt) +"<font color=#aaaaaa>/</font>"+ round(ui.rowData["exam_score_tot"]/eval_cnt) ;
 			}
 			else
 			{
 				var bestWorst = (ui.rowData["best_cnt"]=="1") ? "<font color=blue>ⓑ</font>" : (ui.rowData["worst_cnt"]=="1") ? "<font color=red>ⓦ</font>" : "";
-				return bestWorst + ui.rowData["eval_score"] +"<font color=#arraaaaa>/</font>"+ ui.rowData["exam_score_tot"] +"<font color=#aaaaaa>/</font>"+ ui.rowData["add_score_tot"];
+				return bestWorst + ui.rowData["eval_score"] +"<font color=#arraaaaa>/</font>"+ ui.rowData["exam_score_tot"];
 			}
 		}
 	};
-	
+	var colAddscore = { title: "가중치점수", width: 80, align:"left", dataIndx: "add_score_tot"};
 	var colComment = { title: "코멘트", width: 250, align:"left", dataIndx: "eval_comment"};
 	var colText    = { title: "총평", width: 250, align:"left", dataIndx: "eval_text"};
 	
@@ -158,10 +158,11 @@
 				for(var i=0, len=itemData.length; i<len; i++) 
 				{
 					var itemCode = itemData[i].item_code
-					sum["item_score_" +itemCode] = round(sum["exam_score_"+itemCode]/strTo(sum.eval_cnt,0,1),1)  +  
-													"<font color=#bbbbbb>/</font>"  +  
-													round( sum["add_score_"+itemCode]/strTo(sum.eval_cnt,0,1),1 );
-				}			
+					//sum["item_score_" +itemCode] = round(sum["exam_score_"+itemCode]/strTo(sum.eval_cnt,0,1),1)  +
+					//								"<font color=#bbbbbb>/</font>"  +
+					//								round( sum["add_score_"+itemCode]/strTo(sum.eval_cnt,0,1),1 );
+					sum["item_score_" +itemCode] = round(sum["exam_score_"+itemCode]/strTo(sum.eval_cnt,0,1),1);
+				}
 			}
 	
 			var o = { data: [sum], $cont: $summary };
@@ -190,6 +191,13 @@
 		*/
 		if(($('select[name=mpart_code]').size() == 1 && $('select[name=mpart_code]').val() == ""))		$('select[name=bpart_code]').change();
 		else if(($('select[name=spart_code]').size() == 1 && $('select[name=spart_code]').val() == ""))	$('select[name=mpart_code]').change();
+
+		//달력 수동 입력시 - 자동 입력
+		$(".result_form1").on("change keyup", function(e)
+		{
+			$(this).val(getDateToNum($(this).val().replace(/[^0-9]/g,""),"-"));
+		});
+
 	});
 	
 	function beforeSearchFunc()
@@ -262,7 +270,8 @@
 	
 					if(d.item_code == d2.up_code && d2.obj_type == 'I')
 					{
-						itemArray[itemI] = {title: ""+d2.item_name+"<br>("+d2.exam_score_max+"<font color=#bbbbbb>/</font>"+d2.add_score_max+")", width: 160, align:"center", dataIndx: "item_score_"+d2.item_code}
+						//itemArray[itemI] = {title: ""+d2.item_name+"<br>("+d2.exam_score_max+"<font color=#bbbbbb>/</font>"+d2.add_score_max+")", width: 160, align:"center", dataIndx: "item_score_"+d2.item_code}
+						itemArray[itemI] = {title: ""+d2.item_name+"<br>("+d2.exam_score_max+")", width: 160, align:"center", dataIndx: "item_score_"+d2.item_code}
 						itemI++;
 					}
 				}
@@ -273,6 +282,7 @@
 		}
 	
 		cm.push(colTotScore);
+		cm.push(colAddscore);
 		cm.push(colComment);
 		cm.push(colText);
 		$("#grid").pqGrid("option", "colModel", cm );

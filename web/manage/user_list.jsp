@@ -13,6 +13,7 @@
 		String user_id = CommonUtil.getParameter("user_id", "");
 		String user_name = CommonUtil.getParameter("user_name", "");
 		String local_no = CommonUtil.getParameter("local_no", "");
+		String user_level = CommonUtil.getParameter("user_level", "");
 
 		Map<String,Object> argMap = new HashMap();
 
@@ -97,6 +98,7 @@
 			},
 			//채널 노출 상태에 따라 변경 - CJM(20190625)
 			{ title: "채널번호", width: 80, dataIndx: "channel_no", editable: !isChannel, sortable: false},
+			{ title: "소분류명", width: 80, dataIndx: "spart_name", sortable: false},
 			{ title: "녹취구분", dataIndx: "rec_div", hidden: true },
 			
 			/*
@@ -608,6 +610,7 @@
 		<input type="hidden" name="user_id" value="<%=user_id%>"/>
 		<input type="hidden" name="user_name" value="<%=user_name%>"/>
 		<input type="hidden" name="local_no" value="<%=local_no%>"/>
+		<input type="hidden" name="user_level" value="<%=user_level%>"/>
 	</form>
 	<!--grid 영역-->
 	<div id="grid"></div>

@@ -28,6 +28,13 @@
 		cur_page = (cur_page<1) ? 1 : cur_page;
 		sort_dir = ("down".equals(sort_dir)) ? "desc" : "asc";
 
+		// 파라미터 체크
+		if(!CommonUtil.hasText(login_id) && !CommonUtil.hasText(login_name) && !CommonUtil.hasText(user_id) && !CommonUtil.hasText(user_name))
+		{
+			Site.writeJsonResult(out, false, "필수 조회값이 존재하지 않습니다. \\n(로그인ID/로그인명/상담원ID/상담사명)");
+			return;
+		}
+
 		// paging 변수
 		int tot_cnt = 0;
 		int page_cnt = 0;

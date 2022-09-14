@@ -82,7 +82,8 @@
 				//  2017.11.13 connick
 				resultMap.put("exam_score_"+item.get("item_code"),item.get("exam_score"));
 				resultMap.put("add_score_"+item.get("item_code"),item.get("add_score"));
-				resultMap.put("item_score_"+item.get("item_code"),item.get("exam_score")+"<font color=#bbbbbb>/</font>"+item.get("add_score"));
+				//resultMap.put("item_score_"+item.get("item_code"),item.get("exam_score")+"<font color=#bbbbbb>/</font>"+item.get("add_score"));
+				resultMap.put("item_score_"+item.get("item_code"),item.get("exam_score"));
 				resultMap.remove("exam_score");
 				resultMap.remove("add_score");
 
@@ -162,7 +163,8 @@
 				}
 				itemMap.put("exam_score_"+item.get("item_code"), ComLib.toINN(itemMap.get("exam_score_"+item.get("item_code"))) + ComLib.toINN(item.get("exam_score")));
 				itemMap.put("add_score_"+item.get("item_code"),  ComLib.toINN(itemMap.get("add_score_"+item.get("item_code")))  + ComLib.toINN(item.get("add_score")));
-				rsltMap.put("item_score_"+item.get("item_code"),"<b><font color=blue>"+ComLib.round(itemMap.get("exam_score_"+item.get("item_code"))/eval_cnt,1)+"<font color=#bbbbbb>/</font>"+ComLib.round(itemMap.get("add_score_"+item.get("item_code"))/eval_cnt,1)+"</font></b>");
+				//rsltMap.put("item_score_"+item.get("item_code"),"<b><font color=blue>"+ComLib.round(itemMap.get("exam_score_"+item.get("item_code"))/eval_cnt,1)+"<font color=#bbbbbb>/</font>"+ComLib.round(itemMap.get("add_score_"+item.get("item_code"))/eval_cnt,1)+"</font></b>");
+				rsltMap.put("item_score_"+item.get("item_code"),"<b><font color=blue>"+ComLib.round(itemMap.get("exam_score_"+item.get("item_code"))/eval_cnt,1)+"</font></b>");
 				evalOrderOld = item.get("eval_order").toString();
 			}
 			else

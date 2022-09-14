@@ -40,12 +40,13 @@
 		
 		for(int i=0; i<itemSize; i++) {
 			JSONObject d = (JSONObject) itemData.get(i);
-			sb.append("<td class=th><nobr>"+d.get("item_name")+"<br>["+d.get("exam_score_max")+"<font color=gray>/</font>"+d.get("add_score_max")+"]</td>");
+			//sb.append("<td class=th><nobr>"+d.get("item_name")+"<br>["+d.get("exam_score_max")+"<font color=gray>/</font>"+d.get("add_score_max")+"]</td>");
+			sb.append("<td class=th><nobr>"+d.get("item_name")+"<br>["+d.get("exam_score_max")+"]</td>");
 			// 2017.11.13 connick
 			sb.append("<td class=th>코멘트</td>");
 			// 2017.11.13 connick
-		}		
-		
+		}
+		sb.append("<td class=th>가중치점수</td>");
 		sb.append("<td class=th>총점</td>");
 		sb.append("<td class=th>코멘트</td>");
 		sb.append("<td class=th>총평</td>");
@@ -123,7 +124,9 @@
 			//  2017.11.13 connick
 			resultMap.put("exam_score_"+item.get("item_code"),item.get("exam_score"));
 			resultMap.put("add_score_"+item.get("item_code"),item.get("add_score"));
-			resultMap.put("item_score_"+item.get("item_code"),item.get("exam_score")+"<font color=#bbbbbb>/</font>"+item.get("add_score"));
+			//resultMap.put("item_score_"+item.get("item_code"),item.get("exam_score")+"<font color=#bbbbbb>/</font>"+item.get("add_score"));
+			resultMap.put("item_score_"+item.get("item_code"),item.get("exam_score"));
+			resultMap.put("add_score_"+item.get("item_code"),item.get("add_score"));
 			resultMap.remove("exam_score");
 			resultMap.remove("add_score");
 
@@ -174,8 +177,10 @@
 				System.out.println("sum_exam_score_tot : "+sum_exam_score_tot);
 				System.out.println("sum_exam_score_tot/eval_cnt : "+ComLib.round((double)sum_exam_score_tot/eval_cnt,0));
 				*/
-				sb.append("<td class=subSum><font color=blue>"+item.get("best_cnt")+"</font><font color=#aaaaaa>/</font><font color=red>"+ item.get("worst_cnt") +"</font><font color=#aaaaaa>/</font>"+ ComLib.round(Double.parseDouble(item.get("eval_score").toString())/eval_cnt,0) +"<font color=#aaaaaa>/</font>"+ ComLib.round((double)sum_exam_score_tot/eval_cnt,0) +"<font color=#aaaaaa>/</font>"+ item.get("add_score_tot")+"</td><td class=subSum colspan=2></td>");
-				
+				//sb.append("<td class=subSum><font color=blue>"+item.get("best_cnt")+"</font><font color=#aaaaaa>/</font><font color=red>"+ item.get("worst_cnt") +"</font><font color=#aaaaaa>/</font>"+ ComLib.round(Double.parseDouble(item.get("eval_score").toString())/eval_cnt,0) +"<font color=#aaaaaa>/</font>"+ ComLib.round((double)sum_exam_score_tot/eval_cnt,0) +"<font color=#aaaaaa>/</font>"+ item.get("add_score_tot")+"</td><td class=subSum colspan=2></td>");
+				sb.append("<td class=subSum><font color=blue>"+item.get("best_cnt")+"</font><font color=#aaaaaa>/</font><font color=red>"+ item.get("worst_cnt") +"</font><font color=#aaaaaa>/</font>"+ ComLib.round(Double.parseDouble(item.get("eval_score").toString())/eval_cnt,0) +"<font color=#aaaaaa>/</font>"+ ComLib.round((double)sum_exam_score_tot/eval_cnt,0) +"</td>");
+				sb.append("<td class=subSum>" + item.get("add_score_tot")+"</td><td class=subSum colspan=2></td>");
+
 				sum_eval_cnt = 0;
 				sum_exam_score_tot = 0;
 				sum_add_score_tot = 0;
@@ -228,7 +233,9 @@
 				}			
 
 				String bestWorst = (item.get("best_cnt").toString().equals("1")) ? "<font color=blue>ⓑ</font>" : (item.get("worst_cnt").toString().equals("1")) ? "<font color=red>ⓦ</font>" : "";
-				sb.append("<td class=r>"+bestWorst + ComLib.toINN(item.get("eval_score")) +"<font color=#arraaaaa>/</font>"+ ComLib.toINN(item.get("exam_score_tot")) +"<font color=#aaaaaa>/</font>"+ ComLib.toINN(item.get("add_score_tot"))+"</td>");
+				//sb.append("<td class=r>"+bestWorst + ComLib.toINN(item.get("eval_score")) +"<font color=#arraaaaa>/</font>"+ ComLib.toINN(item.get("exam_score_tot")) +"<font color=#aaaaaa>/</font>"+ ComLib.toINN(item.get("add_score_tot"))+"</td>");
+				sb.append("<td class=r>"+bestWorst + ComLib.toINN(item.get("eval_score")) +"<font color=#arraaaaa>/</font>"+ ComLib.toINN(item.get("exam_score_tot")) +"</td>");
+				sb.append("<td>" + ComLib.toNN(item.get("add_score_tot")) + "</td>");
 				sb.append("<td>" + ComLib.toNN(item.get("eval_comment")) + "</td>");
 				sb.append("<td>" + ComLib.toNN(item.get("eval_text")) + "</td>");
 			}			
@@ -298,7 +305,9 @@
 				}
 				itemMap.put("exam_score_"+item.get("item_code"), ComLib.toINN(itemMap.get("exam_score_"+item.get("item_code"))) + ComLib.toINN(item.get("exam_score")));
 				itemMap.put("add_score_"+item.get("item_code"),  ComLib.toINN(itemMap.get("add_score_"+item.get("item_code")))  + ComLib.toINN(item.get("add_score")));
-				rsltMap.put("item_score_"+item.get("item_code"),"<b><font color=blue>"+ComLib.round(itemMap.get("exam_score_"+item.get("item_code"))/eval_cnt,1)+"<font color=#bbbbbb>/</font>"+ComLib.round(itemMap.get("add_score_"+item.get("item_code"))/eval_cnt,1)+"</font></b>");
+				//rsltMap.put("item_score_"+item.get("item_code"),"<b><font color=blue>"+ComLib.round(itemMap.get("exam_score_"+item.get("item_code"))/eval_cnt,1)+"<font color=#bbbbbb>/</font>"+ComLib.round(itemMap.get("add_score_"+item.get("item_code"))/eval_cnt,1)+"</font></b>");
+				rsltMap.put("item_score_"+item.get("item_code"),"<b><font color=blue>"+ComLib.round(itemMap.get("exam_score_"+item.get("item_code"))/eval_cnt,1));
+				rsltMap.put("add_score_tot"+item.get("add_score_tot"),ComLib.round(itemMap.get("add_score_"+item.get("item_code"))/eval_cnt,1)+"</font></b>");
 				evalOrderOld = item.get("eval_order").toString();
 			}
 			else

@@ -153,7 +153,15 @@
 		$("button[name=btn_search_config]").click(function() {
 			popResultConfig('S');
 		});
-		
+
+		// 엔터키가 눌러졌을 경우 데이터 조회 실행
+		$("#search input, #search select").keyup(function(e) {
+			if(e.keyCode == 13)
+			{
+				recSearch();
+			}
+		});
+
 		//조회 기능 수정 - CJM(20180504)
 		$("button[name=btn_search]").click(function() 
 		{

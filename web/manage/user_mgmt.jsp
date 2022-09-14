@@ -102,7 +102,8 @@
 		param.user_id = $("#outer_search input[name=user_id]").val();
 		param.user_name = $("#outer_search input[name=user_name]").val();
 		param.local_no = $("#outer_search input[name=local_no]").val();
-		
+		param.user_level = $("#outer_search select[name=user_level]").val();
+
 		if(getJsonValCnt(param) < 1) 
 		{
 			// 활성화
@@ -157,6 +158,18 @@
 								</div>
 								<div id="labelDiv">
 									<label class="simple_tag">내선번호</label><input type="text" class="form-control input_form1" name="local_no" placeholder="">
+								</div>
+								<div id="labelDiv">
+										<label class="simple_tag">사용자 등급</label>
+										<select class="form-control input_form1" name="user_level" >
+											<option value="" selected>전체</option>
+											<option value="0">시스템 관리자</option>
+											<option value="A">관리자</option>
+											<option value="B">센터장</option>
+											<option value="C">팀장</option>
+											<option value="D">조장</option>
+											<option value="E">사용자</option>
+										</select>
 								</div>
 							 </div>
 						</div>

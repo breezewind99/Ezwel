@@ -54,7 +54,12 @@
 		
 		$grid = $("#grid").pqGrid(obj);
 		//console.log("$grid : "+$grid.lenght);
-		
+
+		//달력 수동 입력시 - 자동 입력
+		$(".log_form1").on("change keyup", function(e)
+		{
+			$(this).val(getDateToNum($(this).val().replace(/[^0-9]/g,""),"-"));
+		});
 	});
 </script>
 

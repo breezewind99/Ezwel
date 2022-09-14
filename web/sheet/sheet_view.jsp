@@ -107,9 +107,9 @@ $(function () {
 		<table class="table top-line1 table-bordered tt">
 			<thead>
 				<tr>
-					<th colspan="2" style="width:22%;">카테고리</th>
-					<th>항목</th>
-					<th style="width:30%;">보기</th>
+					<th colspan="2" style="width:15%;">카테고리</th>
+					<th style="width:15%;">항목</th>
+					<th style="width:48%;">보기</th>
 					<th style="width:60px;">배점</th>
 					<th style="width:60px;">가중치</th>
 					<th style="width:68px;">기본선택</th>

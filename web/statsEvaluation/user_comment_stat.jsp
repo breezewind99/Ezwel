@@ -106,6 +106,12 @@
 			$("#grid").pqGrid("option", "dataModel", dataModel );
 			setColModel();
 		}
+
+		//달력 수동 입력시 - 자동 입력
+		$(".result_form1").on("change keyup", function(e)
+		{
+			$(this).val(getDateToNum($(this).val().replace(/[^0-9]/g,""),"-"));
+		});
 	});
 	
 	//차수 컬럼 설정하기

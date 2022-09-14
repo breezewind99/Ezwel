@@ -156,7 +156,12 @@
 		*/
 		if(($('select[name=mpart_code]').size() == 1 && $('select[name=mpart_code]').val() == ""))		$('select[name=bpart_code]').change();
 		else if(($('select[name=spart_code]').size() == 1 && $('select[name=spart_code]').val() == ""))	$('select[name=mpart_code]').change();
-		
+
+		//달력 수동 입력시 - 자동 입력
+		$(".result_form1").on("change keyup", function(e)
+		{
+			$(this).val(getDateToNum($(this).val().replace(/[^0-9]/g,""),"-"));
+		});
 	});
 	
 	function beforeSearchFunc()
