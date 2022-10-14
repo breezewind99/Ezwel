@@ -376,9 +376,6 @@
 						},
 						"depth3" : {
 							"icon" : "../img/tree_depth3_close.gif",
-							"a_attr" : {
-								"class" : "hide_checkbox"
-							}
 						},
 						"depth4" : {
 							"icon" : "../img/tree_user.gif"

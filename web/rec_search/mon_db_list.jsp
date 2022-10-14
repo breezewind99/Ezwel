@@ -130,7 +130,7 @@
 	//감청 플레이어 오픈
 	var playRlisten = function(status, ch_no, local_no, system_ip) {
 		// 녹취상태일 경우만 감청 플레이어 오픈
-		if(status == "1")
+		if(status == "0" || status == "1")
 		{
 			//ActiveX 대체 방안 확인 - CJM(20190104)
 			//console.log("cnettech://"+system_ip+","+parseInt(ch_no)+","+local_no);

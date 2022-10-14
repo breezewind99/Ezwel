@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/common/common.jsp" %>
 <%
-	if(!Site.isPmss(out,"rec_search","json")) return;
+	if(!Site.isPmss(out,"rec_search","")) return;
 
 	Db db = null;
 
@@ -71,16 +71,23 @@
 		sort_idx = ("v_".equals(CommonUtil.leftString(sort_idx, 2)) || "n_".equals(CommonUtil.leftString(sort_idx, 2))) ? sort_idx.substring(2) : sort_idx;
 		sort_dir = ("down".equals(sort_dir)) ? "desc" : "asc";
 
+		String spart_list = "";
 		// user id list parsing
 		if(CommonUtil.hasText(user_list)) 
 		{
 			String user_ids[] = user_list.split(",");
 			String tmp_user_list = "";
-			for(int i=0; i<user_ids.length; i++) 
+			String tmp_spart_list = "";
+			for(int i=0; i<user_ids.length; i++)
 			{
-				tmp_user_list += ",'" + user_ids[i] + "'";
+				if (user_ids[i].substring(0,2).equals("01") && user_ids[i].length()>13) {
+					tmp_spart_list += ",'" + user_ids[i].substring(10,14) + "'";
+				}else{
+					tmp_user_list += ",'" + user_ids[i] + "'";
+				}
 			}
-			user_list = tmp_user_list.substring(1);
+			if(CommonUtil.hasText(tmp_spart_list)) spart_list = tmp_spart_list.substring(1);user_list="";
+			if(CommonUtil.hasText(tmp_user_list)) user_list = tmp_user_list.substring(1);
 		}
 		/*
 		logger.info("☆☆☆☆☆☆");
@@ -187,6 +194,7 @@
 		argMap.put("custom_fld_11", custom_fld_11);
 		argMap.put("custom_fld_12", custom_fld_12);
 		argMap.put("rec_rate", rec_rate);
+		argMap.put("spart_list", spart_list);
 
 		// 사용자 권한에 따른 녹취이력 조회
 		argMap.put("_user_id" ,_LOGIN_ID);

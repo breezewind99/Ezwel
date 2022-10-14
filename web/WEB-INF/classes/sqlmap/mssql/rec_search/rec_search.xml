@@ -360,6 +360,9 @@
 		<if test='user_list!=null and user_list!=""'>
 			and user_id in (${user_list})
 		</if>
+		<if test='spart_list!=null and spart_list!=""'>
+			and spart_code in (${spart_list})
+		</if>
 		<if test='custom_fld_01!=null and custom_fld_01!=""'>
 			and custom_fld_01 = #{custom_fld_01}
 		</if>
@@ -571,6 +574,9 @@
 				</if>
 				<if test='s.user_list!=null and s.user_list!=""'>
 					and user_id in (${s.user_list})
+				</if>
+				<if test='s.spart_list!=null and s.spart_list!=""'>
+					and spart_code in (${s.spart_list})
 				</if>
 				<if test='s.custom_fld_01!=null and s.custom_fld_01!=""'>
 				and custom_fld_01 = #{s.custom_fld_01}
